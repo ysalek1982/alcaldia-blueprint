@@ -77,14 +77,18 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
     meta: [
       { charSet: "utf-8" },
       { name: "viewport", content: "width=device-width, initial-scale=1" },
-      { title: "Lovable App" },
-      { name: "description", content: "Lovable Generated Project" },
+      { title: "Alcaldía de Buena Vista" },
+      { name: "description", content: "Buena Vista Connect is a municipal application prototype for Buena Vista's city hall." },
       { name: "author", content: "Lovable" },
-      { property: "og:title", content: "Lovable App" },
-      { property: "og:description", content: "Lovable Generated Project" },
+      { property: "og:title", content: "Alcaldía de Buena Vista" },
+      { property: "og:description", content: "Buena Vista Connect is a municipal application prototype for Buena Vista's city hall." },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary" },
       { name: "twitter:site", content: "@Lovable" },
+      { name: "twitter:title", content: "Alcaldía de Buena Vista" },
+      { name: "twitter:description", content: "Buena Vista Connect is a municipal application prototype for Buena Vista's city hall." },
+      { property: "og:image", content: "https://pub-bb2e103a32db4e198524a2e9ed8f35b4.r2.dev/15a21ea8-b32b-4ee0-a63f-522408a27abe/id-preview-da161108--e245b854-3c19-4c4a-b039-96a170c4bb60.lovable.app-1780099609134.png" },
+      { name: "twitter:image", content: "https://pub-bb2e103a32db4e198524a2e9ed8f35b4.r2.dev/15a21ea8-b32b-4ee0-a63f-522408a27abe/id-preview-da161108--e245b854-3c19-4c4a-b039-96a170c4bb60.lovable.app-1780099609134.png" },
     ],
     links: [
       {
