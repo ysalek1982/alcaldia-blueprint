@@ -20,6 +20,10 @@ import { Route as DashboardRouteImport } from './routes/dashboard'
 import { Route as ConfiguracionRouteImport } from './routes/configuracion'
 import { Route as CatastroRouteImport } from './routes/catastro'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as RrhhSolicitudesRouteImport } from './routes/rrhh.solicitudes'
+import { Route as RrhhPlanillasRouteImport } from './routes/rrhh.planillas'
+import { Route as RrhhOrganigramaRouteImport } from './routes/rrhh.organigrama'
+import { Route as RrhhFuncionariosRouteImport } from './routes/rrhh.funcionarios'
 
 const RrhhRoute = RrhhRouteImport.update({
   id: '/rrhh',
@@ -76,6 +80,26 @@ const IndexRoute = IndexRouteImport.update({
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const RrhhSolicitudesRoute = RrhhSolicitudesRouteImport.update({
+  id: '/solicitudes',
+  path: '/solicitudes',
+  getParentRoute: () => RrhhRoute,
+} as any)
+const RrhhPlanillasRoute = RrhhPlanillasRouteImport.update({
+  id: '/planillas',
+  path: '/planillas',
+  getParentRoute: () => RrhhRoute,
+} as any)
+const RrhhOrganigramaRoute = RrhhOrganigramaRouteImport.update({
+  id: '/organigrama',
+  path: '/organigrama',
+  getParentRoute: () => RrhhRoute,
+} as any)
+const RrhhFuncionariosRoute = RrhhFuncionariosRouteImport.update({
+  id: '/funcionarios',
+  path: '/funcionarios',
+  getParentRoute: () => RrhhRoute,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
@@ -88,7 +112,11 @@ export interface FileRoutesByFullPath {
   '/portal': typeof PortalRoute
   '/recaudaciones': typeof RecaudacionesRoute
   '/reportes': typeof ReportesRoute
-  '/rrhh': typeof RrhhRoute
+  '/rrhh': typeof RrhhRouteWithChildren
+  '/rrhh/funcionarios': typeof RrhhFuncionariosRoute
+  '/rrhh/organigrama': typeof RrhhOrganigramaRoute
+  '/rrhh/planillas': typeof RrhhPlanillasRoute
+  '/rrhh/solicitudes': typeof RrhhSolicitudesRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
@@ -101,7 +129,11 @@ export interface FileRoutesByTo {
   '/portal': typeof PortalRoute
   '/recaudaciones': typeof RecaudacionesRoute
   '/reportes': typeof ReportesRoute
-  '/rrhh': typeof RrhhRoute
+  '/rrhh': typeof RrhhRouteWithChildren
+  '/rrhh/funcionarios': typeof RrhhFuncionariosRoute
+  '/rrhh/organigrama': typeof RrhhOrganigramaRoute
+  '/rrhh/planillas': typeof RrhhPlanillasRoute
+  '/rrhh/solicitudes': typeof RrhhSolicitudesRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -115,7 +147,11 @@ export interface FileRoutesById {
   '/portal': typeof PortalRoute
   '/recaudaciones': typeof RecaudacionesRoute
   '/reportes': typeof ReportesRoute
-  '/rrhh': typeof RrhhRoute
+  '/rrhh': typeof RrhhRouteWithChildren
+  '/rrhh/funcionarios': typeof RrhhFuncionariosRoute
+  '/rrhh/organigrama': typeof RrhhOrganigramaRoute
+  '/rrhh/planillas': typeof RrhhPlanillasRoute
+  '/rrhh/solicitudes': typeof RrhhSolicitudesRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -131,6 +167,10 @@ export interface FileRouteTypes {
     | '/recaudaciones'
     | '/reportes'
     | '/rrhh'
+    | '/rrhh/funcionarios'
+    | '/rrhh/organigrama'
+    | '/rrhh/planillas'
+    | '/rrhh/solicitudes'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
@@ -144,6 +184,10 @@ export interface FileRouteTypes {
     | '/recaudaciones'
     | '/reportes'
     | '/rrhh'
+    | '/rrhh/funcionarios'
+    | '/rrhh/organigrama'
+    | '/rrhh/planillas'
+    | '/rrhh/solicitudes'
   id:
     | '__root__'
     | '/'
@@ -157,6 +201,10 @@ export interface FileRouteTypes {
     | '/recaudaciones'
     | '/reportes'
     | '/rrhh'
+    | '/rrhh/funcionarios'
+    | '/rrhh/organigrama'
+    | '/rrhh/planillas'
+    | '/rrhh/solicitudes'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -170,7 +218,7 @@ export interface RootRouteChildren {
   PortalRoute: typeof PortalRoute
   RecaudacionesRoute: typeof RecaudacionesRoute
   ReportesRoute: typeof ReportesRoute
-  RrhhRoute: typeof RrhhRoute
+  RrhhRoute: typeof RrhhRouteWithChildren
 }
 
 declare module '@tanstack/react-router' {
@@ -252,8 +300,52 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/rrhh/solicitudes': {
+      id: '/rrhh/solicitudes'
+      path: '/solicitudes'
+      fullPath: '/rrhh/solicitudes'
+      preLoaderRoute: typeof RrhhSolicitudesRouteImport
+      parentRoute: typeof RrhhRoute
+    }
+    '/rrhh/planillas': {
+      id: '/rrhh/planillas'
+      path: '/planillas'
+      fullPath: '/rrhh/planillas'
+      preLoaderRoute: typeof RrhhPlanillasRouteImport
+      parentRoute: typeof RrhhRoute
+    }
+    '/rrhh/organigrama': {
+      id: '/rrhh/organigrama'
+      path: '/organigrama'
+      fullPath: '/rrhh/organigrama'
+      preLoaderRoute: typeof RrhhOrganigramaRouteImport
+      parentRoute: typeof RrhhRoute
+    }
+    '/rrhh/funcionarios': {
+      id: '/rrhh/funcionarios'
+      path: '/funcionarios'
+      fullPath: '/rrhh/funcionarios'
+      preLoaderRoute: typeof RrhhFuncionariosRouteImport
+      parentRoute: typeof RrhhRoute
+    }
   }
 }
+
+interface RrhhRouteChildren {
+  RrhhFuncionariosRoute: typeof RrhhFuncionariosRoute
+  RrhhOrganigramaRoute: typeof RrhhOrganigramaRoute
+  RrhhPlanillasRoute: typeof RrhhPlanillasRoute
+  RrhhSolicitudesRoute: typeof RrhhSolicitudesRoute
+}
+
+const RrhhRouteChildren: RrhhRouteChildren = {
+  RrhhFuncionariosRoute: RrhhFuncionariosRoute,
+  RrhhOrganigramaRoute: RrhhOrganigramaRoute,
+  RrhhPlanillasRoute: RrhhPlanillasRoute,
+  RrhhSolicitudesRoute: RrhhSolicitudesRoute,
+}
+
+const RrhhRouteWithChildren = RrhhRoute._addFileChildren(RrhhRouteChildren)
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
@@ -266,8 +358,18 @@ const rootRouteChildren: RootRouteChildren = {
   PortalRoute: PortalRoute,
   RecaudacionesRoute: RecaudacionesRoute,
   ReportesRoute: ReportesRoute,
-  RrhhRoute: RrhhRoute,
+  RrhhRoute: RrhhRouteWithChildren,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
   ._addFileTypes<FileRouteTypes>()
+
+import type { getRouter } from './router.tsx'
+import type { startInstance } from './start.ts'
+declare module '@tanstack/react-start' {
+  interface Register {
+    ssr: true
+    router: Awaited<ReturnType<typeof getRouter>>
+    config: Awaited<ReturnType<typeof startInstance.getOptions>>
+  }
+}

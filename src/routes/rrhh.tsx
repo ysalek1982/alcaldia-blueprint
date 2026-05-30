@@ -1,61 +1,71 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { AppShell } from "@/components/AppShell";
+import { ModuleShell } from "@/components/ModuleShell";
 import { StatCard } from "@/components/StatCard";
-import { Badge, DataTable } from "@/components/DataTable";
-import { funcionarios } from "@/lib/mock-data";
-import { Users, UserPlus, Clock, FileSignature, Download, Plus } from "lucide-react";
+import { navRRHH } from "@/lib/module-navs";
+import { useFuncionariosStore, usePlanillasStore, useSolicitudesStore } from "@/lib/stores";
+import { Users, UserPlus, Clock, FileSignature } from "lucide-react";
 
 export const Route = createFileRoute("/rrhh")({
   head: () => ({ meta: [{ title: "Recursos Humanos — G.A.M. Buena Vista" }] }),
-  component: RRHH,
+  component: RRHHResumen,
 });
 
-function RRHH() {
+function RRHHResumen() {
+  const funcionarios = useFuncionariosStore((s) => s.rows);
+  const planillas = usePlanillasStore((s) => s.rows);
+  const solicitudes = useSolicitudesStore((s) => s.rows);
+
+  const activos = funcionarios.filter((f) => f.estado === "Activo").length;
+  const planillaActual = planillas.find((p) => p.estado === "Borrador") ?? planillas[0];
+  const pendientes = solicitudes.filter((s) => s.estado === "Pendiente").length;
+
   return (
-    <AppShell
+    <ModuleShell
       title="Recursos Humanos"
-      subtitle="Legajo, asistencia, planillas y movimientos"
-      actions={
-        <>
-          <button className="inline-flex items-center gap-2 h-9 px-3 rounded-md bg-primary text-primary-foreground text-sm font-medium hover:bg-primary/90">
-            <Plus className="h-4 w-4" /> Nuevo funcionario
-          </button>
-          <button className="inline-flex items-center gap-2 h-9 px-3 rounded-md border border-border bg-card text-sm hover:bg-muted">
-            <Download className="h-4 w-4" /> Exportar planilla
-          </button>
-        </>
-      }
+      subtitle="Subsistema de personal, planillas y movimientos"
+      subnav={navRRHH}
+      breadcrumb={[{ label: "Módulos", to: "/dashboard" }, { label: "RRHH" }]}
     >
       <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-4">
-        <StatCard label="Funcionarios" value="218" hint="14 secretarías" icon={Users} accent="primary" />
+        <StatCard label="Funcionarios totales" value={funcionarios.length.toString()} hint={`${activos} activos`} icon={Users} accent="primary" />
         <StatCard label="Altas del mes" value="4" hint="2 contratos eventuales" icon={UserPlus} accent="secondary" />
-        <StatCard label="Solicitudes pendientes" value="12" hint="Vacaciones / permisos" icon={Clock} accent="accent" />
-        <StatCard label="Planilla septiembre" value="Bs. 1.842.300" hint="Pendiente aprobación" icon={FileSignature} accent="primary" />
+        <StatCard label="Solicitudes pendientes" value={pendientes.toString()} hint="Requieren aprobación" icon={Clock} accent="accent" />
+        <StatCard label={`Planilla ${planillaActual?.periodo ?? ""}`} value={`Bs. ${(planillaActual?.total ?? 0).toLocaleString("es-BO")}`} hint={planillaActual?.estado} icon={FileSignature} accent="primary" />
       </div>
 
-      <div className="mt-6">
-        <div className="flex items-center justify-between mb-3">
-          <h3 className="font-semibold text-foreground">Legajo de funcionarios</h3>
-          <input
-            placeholder="Buscar por CI o nombre…"
-            className="h-9 px-3 rounded-md border border-input bg-card text-sm w-72 focus:outline-none focus:ring-2 focus:ring-ring"
-          />
+      <div className="mt-6 grid grid-cols-1 lg:grid-cols-2 gap-4">
+        <div className="bg-card border border-border rounded-lg p-5">
+          <h3 className="font-semibold text-foreground">Solicitudes recientes</h3>
+          <ul className="mt-3 divide-y divide-border">
+            {solicitudes.slice(0, 5).map((s) => (
+              <li key={s.id} className="py-2.5 flex items-center justify-between">
+                <div>
+                  <div className="text-sm font-medium">{s.funcionario}</div>
+                  <div className="text-[11px] text-muted-foreground">{s.tipo} · {s.desde} → {s.hasta} · {s.dias}d</div>
+                </div>
+                <span className={`text-[11px] px-2 py-0.5 rounded-full ${
+                  s.estado === "Aprobada" ? "bg-primary/10 text-primary"
+                  : s.estado === "Pendiente" ? "bg-accent/40 text-accent-foreground"
+                  : "bg-destructive/10 text-destructive"
+                }`}>{s.estado}</span>
+              </li>
+            ))}
+          </ul>
         </div>
-        <DataTable
-          columns={[
-            { key: "ci", label: "CI" },
-            { key: "nombre", label: "Funcionario" },
-            { key: "cargo", label: "Cargo" },
-            { key: "secretaria", label: "Secretaría" },
-            { key: "ingreso", label: "Ingreso" },
-            {
-              key: "estado", label: "Estado",
-              render: (r) => <Badge tone={r.estado === "Activo" ? "primary" : "accent"}>{r.estado}</Badge>,
-            },
-          ]}
-          rows={funcionarios}
-        />
+        <div className="bg-card border border-border rounded-lg p-5">
+          <h3 className="font-semibold text-foreground">Distribución por secretaría</h3>
+          <ul className="mt-3 space-y-2">
+            {Object.entries(funcionarios.reduce<Record<string, number>>((acc, f) => {
+              acc[f.secretaria] = (acc[f.secretaria] ?? 0) + 1; return acc;
+            }, {})).map(([sec, n]) => (
+              <li key={sec}>
+                <div className="flex justify-between text-xs mb-1"><span>{sec}</span><span className="text-muted-foreground">{n}</span></div>
+                <div className="h-1.5 rounded-full bg-muted overflow-hidden"><div className="h-full bg-primary" style={{ width: `${(n / funcionarios.length) * 100}%` }} /></div>
+              </li>
+            ))}
+          </ul>
+        </div>
       </div>
-    </AppShell>
+    </ModuleShell>
   );
 }
