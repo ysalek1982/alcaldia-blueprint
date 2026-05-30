@@ -24,6 +24,10 @@ import { Route as RrhhSolicitudesRouteImport } from './routes/rrhh.solicitudes'
 import { Route as RrhhPlanillasRouteImport } from './routes/rrhh.planillas'
 import { Route as RrhhOrganigramaRouteImport } from './routes/rrhh.organigrama'
 import { Route as RrhhFuncionariosRouteImport } from './routes/rrhh.funcionarios'
+import { Route as RecaudacionesMoraRouteImport } from './routes/recaudaciones.mora'
+import { Route as RecaudacionesDeudasRouteImport } from './routes/recaudaciones.deudas'
+import { Route as RecaudacionesContribuyentesRouteImport } from './routes/recaudaciones.contribuyentes'
+import { Route as RecaudacionesConceptosRouteImport } from './routes/recaudaciones.conceptos'
 
 const RrhhRoute = RrhhRouteImport.update({
   id: '/rrhh',
@@ -100,6 +104,27 @@ const RrhhFuncionariosRoute = RrhhFuncionariosRouteImport.update({
   path: '/funcionarios',
   getParentRoute: () => RrhhRoute,
 } as any)
+const RecaudacionesMoraRoute = RecaudacionesMoraRouteImport.update({
+  id: '/mora',
+  path: '/mora',
+  getParentRoute: () => RecaudacionesRoute,
+} as any)
+const RecaudacionesDeudasRoute = RecaudacionesDeudasRouteImport.update({
+  id: '/deudas',
+  path: '/deudas',
+  getParentRoute: () => RecaudacionesRoute,
+} as any)
+const RecaudacionesContribuyentesRoute =
+  RecaudacionesContribuyentesRouteImport.update({
+    id: '/contribuyentes',
+    path: '/contribuyentes',
+    getParentRoute: () => RecaudacionesRoute,
+  } as any)
+const RecaudacionesConceptosRoute = RecaudacionesConceptosRouteImport.update({
+  id: '/conceptos',
+  path: '/conceptos',
+  getParentRoute: () => RecaudacionesRoute,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
@@ -110,9 +135,13 @@ export interface FileRoutesByFullPath {
   '/fiscalizacion': typeof FiscalizacionRoute
   '/pagos': typeof PagosRoute
   '/portal': typeof PortalRoute
-  '/recaudaciones': typeof RecaudacionesRoute
+  '/recaudaciones': typeof RecaudacionesRouteWithChildren
   '/reportes': typeof ReportesRoute
   '/rrhh': typeof RrhhRouteWithChildren
+  '/recaudaciones/conceptos': typeof RecaudacionesConceptosRoute
+  '/recaudaciones/contribuyentes': typeof RecaudacionesContribuyentesRoute
+  '/recaudaciones/deudas': typeof RecaudacionesDeudasRoute
+  '/recaudaciones/mora': typeof RecaudacionesMoraRoute
   '/rrhh/funcionarios': typeof RrhhFuncionariosRoute
   '/rrhh/organigrama': typeof RrhhOrganigramaRoute
   '/rrhh/planillas': typeof RrhhPlanillasRoute
@@ -127,9 +156,13 @@ export interface FileRoutesByTo {
   '/fiscalizacion': typeof FiscalizacionRoute
   '/pagos': typeof PagosRoute
   '/portal': typeof PortalRoute
-  '/recaudaciones': typeof RecaudacionesRoute
+  '/recaudaciones': typeof RecaudacionesRouteWithChildren
   '/reportes': typeof ReportesRoute
   '/rrhh': typeof RrhhRouteWithChildren
+  '/recaudaciones/conceptos': typeof RecaudacionesConceptosRoute
+  '/recaudaciones/contribuyentes': typeof RecaudacionesContribuyentesRoute
+  '/recaudaciones/deudas': typeof RecaudacionesDeudasRoute
+  '/recaudaciones/mora': typeof RecaudacionesMoraRoute
   '/rrhh/funcionarios': typeof RrhhFuncionariosRoute
   '/rrhh/organigrama': typeof RrhhOrganigramaRoute
   '/rrhh/planillas': typeof RrhhPlanillasRoute
@@ -145,9 +178,13 @@ export interface FileRoutesById {
   '/fiscalizacion': typeof FiscalizacionRoute
   '/pagos': typeof PagosRoute
   '/portal': typeof PortalRoute
-  '/recaudaciones': typeof RecaudacionesRoute
+  '/recaudaciones': typeof RecaudacionesRouteWithChildren
   '/reportes': typeof ReportesRoute
   '/rrhh': typeof RrhhRouteWithChildren
+  '/recaudaciones/conceptos': typeof RecaudacionesConceptosRoute
+  '/recaudaciones/contribuyentes': typeof RecaudacionesContribuyentesRoute
+  '/recaudaciones/deudas': typeof RecaudacionesDeudasRoute
+  '/recaudaciones/mora': typeof RecaudacionesMoraRoute
   '/rrhh/funcionarios': typeof RrhhFuncionariosRoute
   '/rrhh/organigrama': typeof RrhhOrganigramaRoute
   '/rrhh/planillas': typeof RrhhPlanillasRoute
@@ -167,6 +204,10 @@ export interface FileRouteTypes {
     | '/recaudaciones'
     | '/reportes'
     | '/rrhh'
+    | '/recaudaciones/conceptos'
+    | '/recaudaciones/contribuyentes'
+    | '/recaudaciones/deudas'
+    | '/recaudaciones/mora'
     | '/rrhh/funcionarios'
     | '/rrhh/organigrama'
     | '/rrhh/planillas'
@@ -184,6 +225,10 @@ export interface FileRouteTypes {
     | '/recaudaciones'
     | '/reportes'
     | '/rrhh'
+    | '/recaudaciones/conceptos'
+    | '/recaudaciones/contribuyentes'
+    | '/recaudaciones/deudas'
+    | '/recaudaciones/mora'
     | '/rrhh/funcionarios'
     | '/rrhh/organigrama'
     | '/rrhh/planillas'
@@ -201,6 +246,10 @@ export interface FileRouteTypes {
     | '/recaudaciones'
     | '/reportes'
     | '/rrhh'
+    | '/recaudaciones/conceptos'
+    | '/recaudaciones/contribuyentes'
+    | '/recaudaciones/deudas'
+    | '/recaudaciones/mora'
     | '/rrhh/funcionarios'
     | '/rrhh/organigrama'
     | '/rrhh/planillas'
@@ -216,7 +265,7 @@ export interface RootRouteChildren {
   FiscalizacionRoute: typeof FiscalizacionRoute
   PagosRoute: typeof PagosRoute
   PortalRoute: typeof PortalRoute
-  RecaudacionesRoute: typeof RecaudacionesRoute
+  RecaudacionesRoute: typeof RecaudacionesRouteWithChildren
   ReportesRoute: typeof ReportesRoute
   RrhhRoute: typeof RrhhRouteWithChildren
 }
@@ -328,8 +377,54 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof RrhhFuncionariosRouteImport
       parentRoute: typeof RrhhRoute
     }
+    '/recaudaciones/mora': {
+      id: '/recaudaciones/mora'
+      path: '/mora'
+      fullPath: '/recaudaciones/mora'
+      preLoaderRoute: typeof RecaudacionesMoraRouteImport
+      parentRoute: typeof RecaudacionesRoute
+    }
+    '/recaudaciones/deudas': {
+      id: '/recaudaciones/deudas'
+      path: '/deudas'
+      fullPath: '/recaudaciones/deudas'
+      preLoaderRoute: typeof RecaudacionesDeudasRouteImport
+      parentRoute: typeof RecaudacionesRoute
+    }
+    '/recaudaciones/contribuyentes': {
+      id: '/recaudaciones/contribuyentes'
+      path: '/contribuyentes'
+      fullPath: '/recaudaciones/contribuyentes'
+      preLoaderRoute: typeof RecaudacionesContribuyentesRouteImport
+      parentRoute: typeof RecaudacionesRoute
+    }
+    '/recaudaciones/conceptos': {
+      id: '/recaudaciones/conceptos'
+      path: '/conceptos'
+      fullPath: '/recaudaciones/conceptos'
+      preLoaderRoute: typeof RecaudacionesConceptosRouteImport
+      parentRoute: typeof RecaudacionesRoute
+    }
   }
 }
+
+interface RecaudacionesRouteChildren {
+  RecaudacionesConceptosRoute: typeof RecaudacionesConceptosRoute
+  RecaudacionesContribuyentesRoute: typeof RecaudacionesContribuyentesRoute
+  RecaudacionesDeudasRoute: typeof RecaudacionesDeudasRoute
+  RecaudacionesMoraRoute: typeof RecaudacionesMoraRoute
+}
+
+const RecaudacionesRouteChildren: RecaudacionesRouteChildren = {
+  RecaudacionesConceptosRoute: RecaudacionesConceptosRoute,
+  RecaudacionesContribuyentesRoute: RecaudacionesContribuyentesRoute,
+  RecaudacionesDeudasRoute: RecaudacionesDeudasRoute,
+  RecaudacionesMoraRoute: RecaudacionesMoraRoute,
+}
+
+const RecaudacionesRouteWithChildren = RecaudacionesRoute._addFileChildren(
+  RecaudacionesRouteChildren,
+)
 
 interface RrhhRouteChildren {
   RrhhFuncionariosRoute: typeof RrhhFuncionariosRoute
@@ -356,7 +451,7 @@ const rootRouteChildren: RootRouteChildren = {
   FiscalizacionRoute: FiscalizacionRoute,
   PagosRoute: PagosRoute,
   PortalRoute: PortalRoute,
-  RecaudacionesRoute: RecaudacionesRoute,
+  RecaudacionesRoute: RecaudacionesRouteWithChildren,
   ReportesRoute: ReportesRoute,
   RrhhRoute: RrhhRouteWithChildren,
 }
