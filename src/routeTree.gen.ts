@@ -20,6 +20,35 @@ import { Route as DashboardRouteImport } from './routes/dashboard'
 import { Route as ConfiguracionRouteImport } from './routes/configuracion'
 import { Route as CatastroRouteImport } from './routes/catastro'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as RrhhSolicitudesRouteImport } from './routes/rrhh.solicitudes'
+import { Route as RrhhPlanillasRouteImport } from './routes/rrhh.planillas'
+import { Route as RrhhOrganigramaRouteImport } from './routes/rrhh.organigrama'
+import { Route as RrhhFuncionariosRouteImport } from './routes/rrhh.funcionarios'
+import { Route as ReportesCatalogoRouteImport } from './routes/reportes.catalogo'
+import { Route as RecaudacionesMoraRouteImport } from './routes/recaudaciones.mora'
+import { Route as RecaudacionesDeudasRouteImport } from './routes/recaudaciones.deudas'
+import { Route as RecaudacionesContribuyentesRouteImport } from './routes/recaudaciones.contribuyentes'
+import { Route as RecaudacionesConceptosRouteImport } from './routes/recaudaciones.conceptos'
+import { Route as PortalReclamosRouteImport } from './routes/portal.reclamos'
+import { Route as PortalPagarRouteImport } from './routes/portal.pagar'
+import { Route as PortalConsultaRouteImport } from './routes/portal.consulta'
+import { Route as PagosOrdenesRouteImport } from './routes/pagos.ordenes'
+import { Route as PagosMovimientosRouteImport } from './routes/pagos.movimientos'
+import { Route as PagosConciliacionRouteImport } from './routes/pagos.conciliacion'
+import { Route as PagosCanalesRouteImport } from './routes/pagos.canales'
+import { Route as FiscalizacionNotificacionesRouteImport } from './routes/fiscalizacion.notificaciones'
+import { Route as FiscalizacionCoactivoRouteImport } from './routes/fiscalizacion.coactivo'
+import { Route as FiscalizacionCasosRouteImport } from './routes/fiscalizacion.casos'
+import { Route as ExpedientesPlantillasRouteImport } from './routes/expedientes.plantillas'
+import { Route as ExpedientesListaRouteImport } from './routes/expedientes.lista'
+import { Route as ConfiguracionUsuariosRouteImport } from './routes/configuracion.usuarios'
+import { Route as ConfiguracionRolesRouteImport } from './routes/configuracion.roles'
+import { Route as ConfiguracionConexionesRouteImport } from './routes/configuracion.conexiones'
+import { Route as ConfiguracionAuditoriaRouteImport } from './routes/configuracion.auditoria'
+import { Route as CatastroZonasRouteImport } from './routes/catastro.zonas'
+import { Route as CatastroTramitesRouteImport } from './routes/catastro.tramites'
+import { Route as CatastroPrediosRouteImport } from './routes/catastro.predios'
+import { Route as CatastroMapaRouteImport } from './routes/catastro.mapa'
 
 const RrhhRoute = RrhhRouteImport.update({
   id: '/rrhh',
@@ -76,46 +105,280 @@ const IndexRoute = IndexRouteImport.update({
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const RrhhSolicitudesRoute = RrhhSolicitudesRouteImport.update({
+  id: '/solicitudes',
+  path: '/solicitudes',
+  getParentRoute: () => RrhhRoute,
+} as any)
+const RrhhPlanillasRoute = RrhhPlanillasRouteImport.update({
+  id: '/planillas',
+  path: '/planillas',
+  getParentRoute: () => RrhhRoute,
+} as any)
+const RrhhOrganigramaRoute = RrhhOrganigramaRouteImport.update({
+  id: '/organigrama',
+  path: '/organigrama',
+  getParentRoute: () => RrhhRoute,
+} as any)
+const RrhhFuncionariosRoute = RrhhFuncionariosRouteImport.update({
+  id: '/funcionarios',
+  path: '/funcionarios',
+  getParentRoute: () => RrhhRoute,
+} as any)
+const ReportesCatalogoRoute = ReportesCatalogoRouteImport.update({
+  id: '/catalogo',
+  path: '/catalogo',
+  getParentRoute: () => ReportesRoute,
+} as any)
+const RecaudacionesMoraRoute = RecaudacionesMoraRouteImport.update({
+  id: '/mora',
+  path: '/mora',
+  getParentRoute: () => RecaudacionesRoute,
+} as any)
+const RecaudacionesDeudasRoute = RecaudacionesDeudasRouteImport.update({
+  id: '/deudas',
+  path: '/deudas',
+  getParentRoute: () => RecaudacionesRoute,
+} as any)
+const RecaudacionesContribuyentesRoute =
+  RecaudacionesContribuyentesRouteImport.update({
+    id: '/contribuyentes',
+    path: '/contribuyentes',
+    getParentRoute: () => RecaudacionesRoute,
+  } as any)
+const RecaudacionesConceptosRoute = RecaudacionesConceptosRouteImport.update({
+  id: '/conceptos',
+  path: '/conceptos',
+  getParentRoute: () => RecaudacionesRoute,
+} as any)
+const PortalReclamosRoute = PortalReclamosRouteImport.update({
+  id: '/reclamos',
+  path: '/reclamos',
+  getParentRoute: () => PortalRoute,
+} as any)
+const PortalPagarRoute = PortalPagarRouteImport.update({
+  id: '/pagar',
+  path: '/pagar',
+  getParentRoute: () => PortalRoute,
+} as any)
+const PortalConsultaRoute = PortalConsultaRouteImport.update({
+  id: '/consulta',
+  path: '/consulta',
+  getParentRoute: () => PortalRoute,
+} as any)
+const PagosOrdenesRoute = PagosOrdenesRouteImport.update({
+  id: '/ordenes',
+  path: '/ordenes',
+  getParentRoute: () => PagosRoute,
+} as any)
+const PagosMovimientosRoute = PagosMovimientosRouteImport.update({
+  id: '/movimientos',
+  path: '/movimientos',
+  getParentRoute: () => PagosRoute,
+} as any)
+const PagosConciliacionRoute = PagosConciliacionRouteImport.update({
+  id: '/conciliacion',
+  path: '/conciliacion',
+  getParentRoute: () => PagosRoute,
+} as any)
+const PagosCanalesRoute = PagosCanalesRouteImport.update({
+  id: '/canales',
+  path: '/canales',
+  getParentRoute: () => PagosRoute,
+} as any)
+const FiscalizacionNotificacionesRoute =
+  FiscalizacionNotificacionesRouteImport.update({
+    id: '/notificaciones',
+    path: '/notificaciones',
+    getParentRoute: () => FiscalizacionRoute,
+  } as any)
+const FiscalizacionCoactivoRoute = FiscalizacionCoactivoRouteImport.update({
+  id: '/coactivo',
+  path: '/coactivo',
+  getParentRoute: () => FiscalizacionRoute,
+} as any)
+const FiscalizacionCasosRoute = FiscalizacionCasosRouteImport.update({
+  id: '/casos',
+  path: '/casos',
+  getParentRoute: () => FiscalizacionRoute,
+} as any)
+const ExpedientesPlantillasRoute = ExpedientesPlantillasRouteImport.update({
+  id: '/plantillas',
+  path: '/plantillas',
+  getParentRoute: () => ExpedientesRoute,
+} as any)
+const ExpedientesListaRoute = ExpedientesListaRouteImport.update({
+  id: '/lista',
+  path: '/lista',
+  getParentRoute: () => ExpedientesRoute,
+} as any)
+const ConfiguracionUsuariosRoute = ConfiguracionUsuariosRouteImport.update({
+  id: '/usuarios',
+  path: '/usuarios',
+  getParentRoute: () => ConfiguracionRoute,
+} as any)
+const ConfiguracionRolesRoute = ConfiguracionRolesRouteImport.update({
+  id: '/roles',
+  path: '/roles',
+  getParentRoute: () => ConfiguracionRoute,
+} as any)
+const ConfiguracionConexionesRoute = ConfiguracionConexionesRouteImport.update({
+  id: '/conexiones',
+  path: '/conexiones',
+  getParentRoute: () => ConfiguracionRoute,
+} as any)
+const ConfiguracionAuditoriaRoute = ConfiguracionAuditoriaRouteImport.update({
+  id: '/auditoria',
+  path: '/auditoria',
+  getParentRoute: () => ConfiguracionRoute,
+} as any)
+const CatastroZonasRoute = CatastroZonasRouteImport.update({
+  id: '/zonas',
+  path: '/zonas',
+  getParentRoute: () => CatastroRoute,
+} as any)
+const CatastroTramitesRoute = CatastroTramitesRouteImport.update({
+  id: '/tramites',
+  path: '/tramites',
+  getParentRoute: () => CatastroRoute,
+} as any)
+const CatastroPrediosRoute = CatastroPrediosRouteImport.update({
+  id: '/predios',
+  path: '/predios',
+  getParentRoute: () => CatastroRoute,
+} as any)
+const CatastroMapaRoute = CatastroMapaRouteImport.update({
+  id: '/mapa',
+  path: '/mapa',
+  getParentRoute: () => CatastroRoute,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
-  '/catastro': typeof CatastroRoute
-  '/configuracion': typeof ConfiguracionRoute
+  '/catastro': typeof CatastroRouteWithChildren
+  '/configuracion': typeof ConfiguracionRouteWithChildren
   '/dashboard': typeof DashboardRoute
-  '/expedientes': typeof ExpedientesRoute
-  '/fiscalizacion': typeof FiscalizacionRoute
-  '/pagos': typeof PagosRoute
-  '/portal': typeof PortalRoute
-  '/recaudaciones': typeof RecaudacionesRoute
-  '/reportes': typeof ReportesRoute
-  '/rrhh': typeof RrhhRoute
+  '/expedientes': typeof ExpedientesRouteWithChildren
+  '/fiscalizacion': typeof FiscalizacionRouteWithChildren
+  '/pagos': typeof PagosRouteWithChildren
+  '/portal': typeof PortalRouteWithChildren
+  '/recaudaciones': typeof RecaudacionesRouteWithChildren
+  '/reportes': typeof ReportesRouteWithChildren
+  '/rrhh': typeof RrhhRouteWithChildren
+  '/catastro/mapa': typeof CatastroMapaRoute
+  '/catastro/predios': typeof CatastroPrediosRoute
+  '/catastro/tramites': typeof CatastroTramitesRoute
+  '/catastro/zonas': typeof CatastroZonasRoute
+  '/configuracion/auditoria': typeof ConfiguracionAuditoriaRoute
+  '/configuracion/conexiones': typeof ConfiguracionConexionesRoute
+  '/configuracion/roles': typeof ConfiguracionRolesRoute
+  '/configuracion/usuarios': typeof ConfiguracionUsuariosRoute
+  '/expedientes/lista': typeof ExpedientesListaRoute
+  '/expedientes/plantillas': typeof ExpedientesPlantillasRoute
+  '/fiscalizacion/casos': typeof FiscalizacionCasosRoute
+  '/fiscalizacion/coactivo': typeof FiscalizacionCoactivoRoute
+  '/fiscalizacion/notificaciones': typeof FiscalizacionNotificacionesRoute
+  '/pagos/canales': typeof PagosCanalesRoute
+  '/pagos/conciliacion': typeof PagosConciliacionRoute
+  '/pagos/movimientos': typeof PagosMovimientosRoute
+  '/pagos/ordenes': typeof PagosOrdenesRoute
+  '/portal/consulta': typeof PortalConsultaRoute
+  '/portal/pagar': typeof PortalPagarRoute
+  '/portal/reclamos': typeof PortalReclamosRoute
+  '/recaudaciones/conceptos': typeof RecaudacionesConceptosRoute
+  '/recaudaciones/contribuyentes': typeof RecaudacionesContribuyentesRoute
+  '/recaudaciones/deudas': typeof RecaudacionesDeudasRoute
+  '/recaudaciones/mora': typeof RecaudacionesMoraRoute
+  '/reportes/catalogo': typeof ReportesCatalogoRoute
+  '/rrhh/funcionarios': typeof RrhhFuncionariosRoute
+  '/rrhh/organigrama': typeof RrhhOrganigramaRoute
+  '/rrhh/planillas': typeof RrhhPlanillasRoute
+  '/rrhh/solicitudes': typeof RrhhSolicitudesRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
-  '/catastro': typeof CatastroRoute
-  '/configuracion': typeof ConfiguracionRoute
+  '/catastro': typeof CatastroRouteWithChildren
+  '/configuracion': typeof ConfiguracionRouteWithChildren
   '/dashboard': typeof DashboardRoute
-  '/expedientes': typeof ExpedientesRoute
-  '/fiscalizacion': typeof FiscalizacionRoute
-  '/pagos': typeof PagosRoute
-  '/portal': typeof PortalRoute
-  '/recaudaciones': typeof RecaudacionesRoute
-  '/reportes': typeof ReportesRoute
-  '/rrhh': typeof RrhhRoute
+  '/expedientes': typeof ExpedientesRouteWithChildren
+  '/fiscalizacion': typeof FiscalizacionRouteWithChildren
+  '/pagos': typeof PagosRouteWithChildren
+  '/portal': typeof PortalRouteWithChildren
+  '/recaudaciones': typeof RecaudacionesRouteWithChildren
+  '/reportes': typeof ReportesRouteWithChildren
+  '/rrhh': typeof RrhhRouteWithChildren
+  '/catastro/mapa': typeof CatastroMapaRoute
+  '/catastro/predios': typeof CatastroPrediosRoute
+  '/catastro/tramites': typeof CatastroTramitesRoute
+  '/catastro/zonas': typeof CatastroZonasRoute
+  '/configuracion/auditoria': typeof ConfiguracionAuditoriaRoute
+  '/configuracion/conexiones': typeof ConfiguracionConexionesRoute
+  '/configuracion/roles': typeof ConfiguracionRolesRoute
+  '/configuracion/usuarios': typeof ConfiguracionUsuariosRoute
+  '/expedientes/lista': typeof ExpedientesListaRoute
+  '/expedientes/plantillas': typeof ExpedientesPlantillasRoute
+  '/fiscalizacion/casos': typeof FiscalizacionCasosRoute
+  '/fiscalizacion/coactivo': typeof FiscalizacionCoactivoRoute
+  '/fiscalizacion/notificaciones': typeof FiscalizacionNotificacionesRoute
+  '/pagos/canales': typeof PagosCanalesRoute
+  '/pagos/conciliacion': typeof PagosConciliacionRoute
+  '/pagos/movimientos': typeof PagosMovimientosRoute
+  '/pagos/ordenes': typeof PagosOrdenesRoute
+  '/portal/consulta': typeof PortalConsultaRoute
+  '/portal/pagar': typeof PortalPagarRoute
+  '/portal/reclamos': typeof PortalReclamosRoute
+  '/recaudaciones/conceptos': typeof RecaudacionesConceptosRoute
+  '/recaudaciones/contribuyentes': typeof RecaudacionesContribuyentesRoute
+  '/recaudaciones/deudas': typeof RecaudacionesDeudasRoute
+  '/recaudaciones/mora': typeof RecaudacionesMoraRoute
+  '/reportes/catalogo': typeof ReportesCatalogoRoute
+  '/rrhh/funcionarios': typeof RrhhFuncionariosRoute
+  '/rrhh/organigrama': typeof RrhhOrganigramaRoute
+  '/rrhh/planillas': typeof RrhhPlanillasRoute
+  '/rrhh/solicitudes': typeof RrhhSolicitudesRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
-  '/catastro': typeof CatastroRoute
-  '/configuracion': typeof ConfiguracionRoute
+  '/catastro': typeof CatastroRouteWithChildren
+  '/configuracion': typeof ConfiguracionRouteWithChildren
   '/dashboard': typeof DashboardRoute
-  '/expedientes': typeof ExpedientesRoute
-  '/fiscalizacion': typeof FiscalizacionRoute
-  '/pagos': typeof PagosRoute
-  '/portal': typeof PortalRoute
-  '/recaudaciones': typeof RecaudacionesRoute
-  '/reportes': typeof ReportesRoute
-  '/rrhh': typeof RrhhRoute
+  '/expedientes': typeof ExpedientesRouteWithChildren
+  '/fiscalizacion': typeof FiscalizacionRouteWithChildren
+  '/pagos': typeof PagosRouteWithChildren
+  '/portal': typeof PortalRouteWithChildren
+  '/recaudaciones': typeof RecaudacionesRouteWithChildren
+  '/reportes': typeof ReportesRouteWithChildren
+  '/rrhh': typeof RrhhRouteWithChildren
+  '/catastro/mapa': typeof CatastroMapaRoute
+  '/catastro/predios': typeof CatastroPrediosRoute
+  '/catastro/tramites': typeof CatastroTramitesRoute
+  '/catastro/zonas': typeof CatastroZonasRoute
+  '/configuracion/auditoria': typeof ConfiguracionAuditoriaRoute
+  '/configuracion/conexiones': typeof ConfiguracionConexionesRoute
+  '/configuracion/roles': typeof ConfiguracionRolesRoute
+  '/configuracion/usuarios': typeof ConfiguracionUsuariosRoute
+  '/expedientes/lista': typeof ExpedientesListaRoute
+  '/expedientes/plantillas': typeof ExpedientesPlantillasRoute
+  '/fiscalizacion/casos': typeof FiscalizacionCasosRoute
+  '/fiscalizacion/coactivo': typeof FiscalizacionCoactivoRoute
+  '/fiscalizacion/notificaciones': typeof FiscalizacionNotificacionesRoute
+  '/pagos/canales': typeof PagosCanalesRoute
+  '/pagos/conciliacion': typeof PagosConciliacionRoute
+  '/pagos/movimientos': typeof PagosMovimientosRoute
+  '/pagos/ordenes': typeof PagosOrdenesRoute
+  '/portal/consulta': typeof PortalConsultaRoute
+  '/portal/pagar': typeof PortalPagarRoute
+  '/portal/reclamos': typeof PortalReclamosRoute
+  '/recaudaciones/conceptos': typeof RecaudacionesConceptosRoute
+  '/recaudaciones/contribuyentes': typeof RecaudacionesContribuyentesRoute
+  '/recaudaciones/deudas': typeof RecaudacionesDeudasRoute
+  '/recaudaciones/mora': typeof RecaudacionesMoraRoute
+  '/reportes/catalogo': typeof ReportesCatalogoRoute
+  '/rrhh/funcionarios': typeof RrhhFuncionariosRoute
+  '/rrhh/organigrama': typeof RrhhOrganigramaRoute
+  '/rrhh/planillas': typeof RrhhPlanillasRoute
+  '/rrhh/solicitudes': typeof RrhhSolicitudesRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -131,6 +394,35 @@ export interface FileRouteTypes {
     | '/recaudaciones'
     | '/reportes'
     | '/rrhh'
+    | '/catastro/mapa'
+    | '/catastro/predios'
+    | '/catastro/tramites'
+    | '/catastro/zonas'
+    | '/configuracion/auditoria'
+    | '/configuracion/conexiones'
+    | '/configuracion/roles'
+    | '/configuracion/usuarios'
+    | '/expedientes/lista'
+    | '/expedientes/plantillas'
+    | '/fiscalizacion/casos'
+    | '/fiscalizacion/coactivo'
+    | '/fiscalizacion/notificaciones'
+    | '/pagos/canales'
+    | '/pagos/conciliacion'
+    | '/pagos/movimientos'
+    | '/pagos/ordenes'
+    | '/portal/consulta'
+    | '/portal/pagar'
+    | '/portal/reclamos'
+    | '/recaudaciones/conceptos'
+    | '/recaudaciones/contribuyentes'
+    | '/recaudaciones/deudas'
+    | '/recaudaciones/mora'
+    | '/reportes/catalogo'
+    | '/rrhh/funcionarios'
+    | '/rrhh/organigrama'
+    | '/rrhh/planillas'
+    | '/rrhh/solicitudes'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
@@ -144,6 +436,35 @@ export interface FileRouteTypes {
     | '/recaudaciones'
     | '/reportes'
     | '/rrhh'
+    | '/catastro/mapa'
+    | '/catastro/predios'
+    | '/catastro/tramites'
+    | '/catastro/zonas'
+    | '/configuracion/auditoria'
+    | '/configuracion/conexiones'
+    | '/configuracion/roles'
+    | '/configuracion/usuarios'
+    | '/expedientes/lista'
+    | '/expedientes/plantillas'
+    | '/fiscalizacion/casos'
+    | '/fiscalizacion/coactivo'
+    | '/fiscalizacion/notificaciones'
+    | '/pagos/canales'
+    | '/pagos/conciliacion'
+    | '/pagos/movimientos'
+    | '/pagos/ordenes'
+    | '/portal/consulta'
+    | '/portal/pagar'
+    | '/portal/reclamos'
+    | '/recaudaciones/conceptos'
+    | '/recaudaciones/contribuyentes'
+    | '/recaudaciones/deudas'
+    | '/recaudaciones/mora'
+    | '/reportes/catalogo'
+    | '/rrhh/funcionarios'
+    | '/rrhh/organigrama'
+    | '/rrhh/planillas'
+    | '/rrhh/solicitudes'
   id:
     | '__root__'
     | '/'
@@ -157,20 +478,49 @@ export interface FileRouteTypes {
     | '/recaudaciones'
     | '/reportes'
     | '/rrhh'
+    | '/catastro/mapa'
+    | '/catastro/predios'
+    | '/catastro/tramites'
+    | '/catastro/zonas'
+    | '/configuracion/auditoria'
+    | '/configuracion/conexiones'
+    | '/configuracion/roles'
+    | '/configuracion/usuarios'
+    | '/expedientes/lista'
+    | '/expedientes/plantillas'
+    | '/fiscalizacion/casos'
+    | '/fiscalizacion/coactivo'
+    | '/fiscalizacion/notificaciones'
+    | '/pagos/canales'
+    | '/pagos/conciliacion'
+    | '/pagos/movimientos'
+    | '/pagos/ordenes'
+    | '/portal/consulta'
+    | '/portal/pagar'
+    | '/portal/reclamos'
+    | '/recaudaciones/conceptos'
+    | '/recaudaciones/contribuyentes'
+    | '/recaudaciones/deudas'
+    | '/recaudaciones/mora'
+    | '/reportes/catalogo'
+    | '/rrhh/funcionarios'
+    | '/rrhh/organigrama'
+    | '/rrhh/planillas'
+    | '/rrhh/solicitudes'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
-  CatastroRoute: typeof CatastroRoute
-  ConfiguracionRoute: typeof ConfiguracionRoute
+  CatastroRoute: typeof CatastroRouteWithChildren
+  ConfiguracionRoute: typeof ConfiguracionRouteWithChildren
   DashboardRoute: typeof DashboardRoute
-  ExpedientesRoute: typeof ExpedientesRoute
-  FiscalizacionRoute: typeof FiscalizacionRoute
-  PagosRoute: typeof PagosRoute
-  PortalRoute: typeof PortalRoute
-  RecaudacionesRoute: typeof RecaudacionesRoute
-  ReportesRoute: typeof ReportesRoute
-  RrhhRoute: typeof RrhhRoute
+  ExpedientesRoute: typeof ExpedientesRouteWithChildren
+  FiscalizacionRoute: typeof FiscalizacionRouteWithChildren
+  PagosRoute: typeof PagosRouteWithChildren
+  PortalRoute: typeof PortalRouteWithChildren
+  RecaudacionesRoute: typeof RecaudacionesRouteWithChildren
+  ReportesRoute: typeof ReportesRouteWithChildren
+  RrhhRoute: typeof RrhhRouteWithChildren
 }
 
 declare module '@tanstack/react-router' {
@@ -252,21 +602,367 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/rrhh/solicitudes': {
+      id: '/rrhh/solicitudes'
+      path: '/solicitudes'
+      fullPath: '/rrhh/solicitudes'
+      preLoaderRoute: typeof RrhhSolicitudesRouteImport
+      parentRoute: typeof RrhhRoute
+    }
+    '/rrhh/planillas': {
+      id: '/rrhh/planillas'
+      path: '/planillas'
+      fullPath: '/rrhh/planillas'
+      preLoaderRoute: typeof RrhhPlanillasRouteImport
+      parentRoute: typeof RrhhRoute
+    }
+    '/rrhh/organigrama': {
+      id: '/rrhh/organigrama'
+      path: '/organigrama'
+      fullPath: '/rrhh/organigrama'
+      preLoaderRoute: typeof RrhhOrganigramaRouteImport
+      parentRoute: typeof RrhhRoute
+    }
+    '/rrhh/funcionarios': {
+      id: '/rrhh/funcionarios'
+      path: '/funcionarios'
+      fullPath: '/rrhh/funcionarios'
+      preLoaderRoute: typeof RrhhFuncionariosRouteImport
+      parentRoute: typeof RrhhRoute
+    }
+    '/reportes/catalogo': {
+      id: '/reportes/catalogo'
+      path: '/catalogo'
+      fullPath: '/reportes/catalogo'
+      preLoaderRoute: typeof ReportesCatalogoRouteImport
+      parentRoute: typeof ReportesRoute
+    }
+    '/recaudaciones/mora': {
+      id: '/recaudaciones/mora'
+      path: '/mora'
+      fullPath: '/recaudaciones/mora'
+      preLoaderRoute: typeof RecaudacionesMoraRouteImport
+      parentRoute: typeof RecaudacionesRoute
+    }
+    '/recaudaciones/deudas': {
+      id: '/recaudaciones/deudas'
+      path: '/deudas'
+      fullPath: '/recaudaciones/deudas'
+      preLoaderRoute: typeof RecaudacionesDeudasRouteImport
+      parentRoute: typeof RecaudacionesRoute
+    }
+    '/recaudaciones/contribuyentes': {
+      id: '/recaudaciones/contribuyentes'
+      path: '/contribuyentes'
+      fullPath: '/recaudaciones/contribuyentes'
+      preLoaderRoute: typeof RecaudacionesContribuyentesRouteImport
+      parentRoute: typeof RecaudacionesRoute
+    }
+    '/recaudaciones/conceptos': {
+      id: '/recaudaciones/conceptos'
+      path: '/conceptos'
+      fullPath: '/recaudaciones/conceptos'
+      preLoaderRoute: typeof RecaudacionesConceptosRouteImport
+      parentRoute: typeof RecaudacionesRoute
+    }
+    '/portal/reclamos': {
+      id: '/portal/reclamos'
+      path: '/reclamos'
+      fullPath: '/portal/reclamos'
+      preLoaderRoute: typeof PortalReclamosRouteImport
+      parentRoute: typeof PortalRoute
+    }
+    '/portal/pagar': {
+      id: '/portal/pagar'
+      path: '/pagar'
+      fullPath: '/portal/pagar'
+      preLoaderRoute: typeof PortalPagarRouteImport
+      parentRoute: typeof PortalRoute
+    }
+    '/portal/consulta': {
+      id: '/portal/consulta'
+      path: '/consulta'
+      fullPath: '/portal/consulta'
+      preLoaderRoute: typeof PortalConsultaRouteImport
+      parentRoute: typeof PortalRoute
+    }
+    '/pagos/ordenes': {
+      id: '/pagos/ordenes'
+      path: '/ordenes'
+      fullPath: '/pagos/ordenes'
+      preLoaderRoute: typeof PagosOrdenesRouteImport
+      parentRoute: typeof PagosRoute
+    }
+    '/pagos/movimientos': {
+      id: '/pagos/movimientos'
+      path: '/movimientos'
+      fullPath: '/pagos/movimientos'
+      preLoaderRoute: typeof PagosMovimientosRouteImport
+      parentRoute: typeof PagosRoute
+    }
+    '/pagos/conciliacion': {
+      id: '/pagos/conciliacion'
+      path: '/conciliacion'
+      fullPath: '/pagos/conciliacion'
+      preLoaderRoute: typeof PagosConciliacionRouteImport
+      parentRoute: typeof PagosRoute
+    }
+    '/pagos/canales': {
+      id: '/pagos/canales'
+      path: '/canales'
+      fullPath: '/pagos/canales'
+      preLoaderRoute: typeof PagosCanalesRouteImport
+      parentRoute: typeof PagosRoute
+    }
+    '/fiscalizacion/notificaciones': {
+      id: '/fiscalizacion/notificaciones'
+      path: '/notificaciones'
+      fullPath: '/fiscalizacion/notificaciones'
+      preLoaderRoute: typeof FiscalizacionNotificacionesRouteImport
+      parentRoute: typeof FiscalizacionRoute
+    }
+    '/fiscalizacion/coactivo': {
+      id: '/fiscalizacion/coactivo'
+      path: '/coactivo'
+      fullPath: '/fiscalizacion/coactivo'
+      preLoaderRoute: typeof FiscalizacionCoactivoRouteImport
+      parentRoute: typeof FiscalizacionRoute
+    }
+    '/fiscalizacion/casos': {
+      id: '/fiscalizacion/casos'
+      path: '/casos'
+      fullPath: '/fiscalizacion/casos'
+      preLoaderRoute: typeof FiscalizacionCasosRouteImport
+      parentRoute: typeof FiscalizacionRoute
+    }
+    '/expedientes/plantillas': {
+      id: '/expedientes/plantillas'
+      path: '/plantillas'
+      fullPath: '/expedientes/plantillas'
+      preLoaderRoute: typeof ExpedientesPlantillasRouteImport
+      parentRoute: typeof ExpedientesRoute
+    }
+    '/expedientes/lista': {
+      id: '/expedientes/lista'
+      path: '/lista'
+      fullPath: '/expedientes/lista'
+      preLoaderRoute: typeof ExpedientesListaRouteImport
+      parentRoute: typeof ExpedientesRoute
+    }
+    '/configuracion/usuarios': {
+      id: '/configuracion/usuarios'
+      path: '/usuarios'
+      fullPath: '/configuracion/usuarios'
+      preLoaderRoute: typeof ConfiguracionUsuariosRouteImport
+      parentRoute: typeof ConfiguracionRoute
+    }
+    '/configuracion/roles': {
+      id: '/configuracion/roles'
+      path: '/roles'
+      fullPath: '/configuracion/roles'
+      preLoaderRoute: typeof ConfiguracionRolesRouteImport
+      parentRoute: typeof ConfiguracionRoute
+    }
+    '/configuracion/conexiones': {
+      id: '/configuracion/conexiones'
+      path: '/conexiones'
+      fullPath: '/configuracion/conexiones'
+      preLoaderRoute: typeof ConfiguracionConexionesRouteImport
+      parentRoute: typeof ConfiguracionRoute
+    }
+    '/configuracion/auditoria': {
+      id: '/configuracion/auditoria'
+      path: '/auditoria'
+      fullPath: '/configuracion/auditoria'
+      preLoaderRoute: typeof ConfiguracionAuditoriaRouteImport
+      parentRoute: typeof ConfiguracionRoute
+    }
+    '/catastro/zonas': {
+      id: '/catastro/zonas'
+      path: '/zonas'
+      fullPath: '/catastro/zonas'
+      preLoaderRoute: typeof CatastroZonasRouteImport
+      parentRoute: typeof CatastroRoute
+    }
+    '/catastro/tramites': {
+      id: '/catastro/tramites'
+      path: '/tramites'
+      fullPath: '/catastro/tramites'
+      preLoaderRoute: typeof CatastroTramitesRouteImport
+      parentRoute: typeof CatastroRoute
+    }
+    '/catastro/predios': {
+      id: '/catastro/predios'
+      path: '/predios'
+      fullPath: '/catastro/predios'
+      preLoaderRoute: typeof CatastroPrediosRouteImport
+      parentRoute: typeof CatastroRoute
+    }
+    '/catastro/mapa': {
+      id: '/catastro/mapa'
+      path: '/mapa'
+      fullPath: '/catastro/mapa'
+      preLoaderRoute: typeof CatastroMapaRouteImport
+      parentRoute: typeof CatastroRoute
+    }
   }
 }
 
+interface CatastroRouteChildren {
+  CatastroMapaRoute: typeof CatastroMapaRoute
+  CatastroPrediosRoute: typeof CatastroPrediosRoute
+  CatastroTramitesRoute: typeof CatastroTramitesRoute
+  CatastroZonasRoute: typeof CatastroZonasRoute
+}
+
+const CatastroRouteChildren: CatastroRouteChildren = {
+  CatastroMapaRoute: CatastroMapaRoute,
+  CatastroPrediosRoute: CatastroPrediosRoute,
+  CatastroTramitesRoute: CatastroTramitesRoute,
+  CatastroZonasRoute: CatastroZonasRoute,
+}
+
+const CatastroRouteWithChildren = CatastroRoute._addFileChildren(
+  CatastroRouteChildren,
+)
+
+interface ConfiguracionRouteChildren {
+  ConfiguracionAuditoriaRoute: typeof ConfiguracionAuditoriaRoute
+  ConfiguracionConexionesRoute: typeof ConfiguracionConexionesRoute
+  ConfiguracionRolesRoute: typeof ConfiguracionRolesRoute
+  ConfiguracionUsuariosRoute: typeof ConfiguracionUsuariosRoute
+}
+
+const ConfiguracionRouteChildren: ConfiguracionRouteChildren = {
+  ConfiguracionAuditoriaRoute: ConfiguracionAuditoriaRoute,
+  ConfiguracionConexionesRoute: ConfiguracionConexionesRoute,
+  ConfiguracionRolesRoute: ConfiguracionRolesRoute,
+  ConfiguracionUsuariosRoute: ConfiguracionUsuariosRoute,
+}
+
+const ConfiguracionRouteWithChildren = ConfiguracionRoute._addFileChildren(
+  ConfiguracionRouteChildren,
+)
+
+interface ExpedientesRouteChildren {
+  ExpedientesListaRoute: typeof ExpedientesListaRoute
+  ExpedientesPlantillasRoute: typeof ExpedientesPlantillasRoute
+}
+
+const ExpedientesRouteChildren: ExpedientesRouteChildren = {
+  ExpedientesListaRoute: ExpedientesListaRoute,
+  ExpedientesPlantillasRoute: ExpedientesPlantillasRoute,
+}
+
+const ExpedientesRouteWithChildren = ExpedientesRoute._addFileChildren(
+  ExpedientesRouteChildren,
+)
+
+interface FiscalizacionRouteChildren {
+  FiscalizacionCasosRoute: typeof FiscalizacionCasosRoute
+  FiscalizacionCoactivoRoute: typeof FiscalizacionCoactivoRoute
+  FiscalizacionNotificacionesRoute: typeof FiscalizacionNotificacionesRoute
+}
+
+const FiscalizacionRouteChildren: FiscalizacionRouteChildren = {
+  FiscalizacionCasosRoute: FiscalizacionCasosRoute,
+  FiscalizacionCoactivoRoute: FiscalizacionCoactivoRoute,
+  FiscalizacionNotificacionesRoute: FiscalizacionNotificacionesRoute,
+}
+
+const FiscalizacionRouteWithChildren = FiscalizacionRoute._addFileChildren(
+  FiscalizacionRouteChildren,
+)
+
+interface PagosRouteChildren {
+  PagosCanalesRoute: typeof PagosCanalesRoute
+  PagosConciliacionRoute: typeof PagosConciliacionRoute
+  PagosMovimientosRoute: typeof PagosMovimientosRoute
+  PagosOrdenesRoute: typeof PagosOrdenesRoute
+}
+
+const PagosRouteChildren: PagosRouteChildren = {
+  PagosCanalesRoute: PagosCanalesRoute,
+  PagosConciliacionRoute: PagosConciliacionRoute,
+  PagosMovimientosRoute: PagosMovimientosRoute,
+  PagosOrdenesRoute: PagosOrdenesRoute,
+}
+
+const PagosRouteWithChildren = PagosRoute._addFileChildren(PagosRouteChildren)
+
+interface PortalRouteChildren {
+  PortalConsultaRoute: typeof PortalConsultaRoute
+  PortalPagarRoute: typeof PortalPagarRoute
+  PortalReclamosRoute: typeof PortalReclamosRoute
+}
+
+const PortalRouteChildren: PortalRouteChildren = {
+  PortalConsultaRoute: PortalConsultaRoute,
+  PortalPagarRoute: PortalPagarRoute,
+  PortalReclamosRoute: PortalReclamosRoute,
+}
+
+const PortalRouteWithChildren =
+  PortalRoute._addFileChildren(PortalRouteChildren)
+
+interface RecaudacionesRouteChildren {
+  RecaudacionesConceptosRoute: typeof RecaudacionesConceptosRoute
+  RecaudacionesContribuyentesRoute: typeof RecaudacionesContribuyentesRoute
+  RecaudacionesDeudasRoute: typeof RecaudacionesDeudasRoute
+  RecaudacionesMoraRoute: typeof RecaudacionesMoraRoute
+}
+
+const RecaudacionesRouteChildren: RecaudacionesRouteChildren = {
+  RecaudacionesConceptosRoute: RecaudacionesConceptosRoute,
+  RecaudacionesContribuyentesRoute: RecaudacionesContribuyentesRoute,
+  RecaudacionesDeudasRoute: RecaudacionesDeudasRoute,
+  RecaudacionesMoraRoute: RecaudacionesMoraRoute,
+}
+
+const RecaudacionesRouteWithChildren = RecaudacionesRoute._addFileChildren(
+  RecaudacionesRouteChildren,
+)
+
+interface ReportesRouteChildren {
+  ReportesCatalogoRoute: typeof ReportesCatalogoRoute
+}
+
+const ReportesRouteChildren: ReportesRouteChildren = {
+  ReportesCatalogoRoute: ReportesCatalogoRoute,
+}
+
+const ReportesRouteWithChildren = ReportesRoute._addFileChildren(
+  ReportesRouteChildren,
+)
+
+interface RrhhRouteChildren {
+  RrhhFuncionariosRoute: typeof RrhhFuncionariosRoute
+  RrhhOrganigramaRoute: typeof RrhhOrganigramaRoute
+  RrhhPlanillasRoute: typeof RrhhPlanillasRoute
+  RrhhSolicitudesRoute: typeof RrhhSolicitudesRoute
+}
+
+const RrhhRouteChildren: RrhhRouteChildren = {
+  RrhhFuncionariosRoute: RrhhFuncionariosRoute,
+  RrhhOrganigramaRoute: RrhhOrganigramaRoute,
+  RrhhPlanillasRoute: RrhhPlanillasRoute,
+  RrhhSolicitudesRoute: RrhhSolicitudesRoute,
+}
+
+const RrhhRouteWithChildren = RrhhRoute._addFileChildren(RrhhRouteChildren)
+
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
-  CatastroRoute: CatastroRoute,
-  ConfiguracionRoute: ConfiguracionRoute,
+  CatastroRoute: CatastroRouteWithChildren,
+  ConfiguracionRoute: ConfiguracionRouteWithChildren,
   DashboardRoute: DashboardRoute,
-  ExpedientesRoute: ExpedientesRoute,
-  FiscalizacionRoute: FiscalizacionRoute,
-  PagosRoute: PagosRoute,
-  PortalRoute: PortalRoute,
-  RecaudacionesRoute: RecaudacionesRoute,
-  ReportesRoute: ReportesRoute,
-  RrhhRoute: RrhhRoute,
+  ExpedientesRoute: ExpedientesRouteWithChildren,
+  FiscalizacionRoute: FiscalizacionRouteWithChildren,
+  PagosRoute: PagosRouteWithChildren,
+  PortalRoute: PortalRouteWithChildren,
+  RecaudacionesRoute: RecaudacionesRouteWithChildren,
+  ReportesRoute: ReportesRouteWithChildren,
+  RrhhRoute: RrhhRouteWithChildren,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
