@@ -37,18 +37,22 @@ function Reportes() {
       }
     >
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-        {indicadores.map((i) => (
-          <div key={i.k} className="bg-card border border-border rounded-lg p-5">
-            <div className="text-xs font-medium text-muted-foreground uppercase tracking-wide">{i.k}</div>
-            <div className="mt-3 flex items-baseline gap-3">
-              <span className={`text-3xl font-semibold text-${i.c}`}>{i.v}</span>
-              <span className="text-xs text-muted-foreground">{i.t}</span>
+        {indicadores.map((i) => {
+          const txt: Record<string, string> = { primary: "text-primary", secondary: "text-secondary", accent: "text-accent-foreground" };
+          const bg: Record<string, string> = { primary: "bg-primary", secondary: "bg-secondary", accent: "bg-accent" };
+          return (
+            <div key={i.k} className="bg-card border border-border rounded-lg p-5">
+              <div className="text-xs font-medium text-muted-foreground uppercase tracking-wide">{i.k}</div>
+              <div className="mt-3 flex items-baseline gap-3">
+                <span className={`text-3xl font-semibold ${txt[i.c]}`}>{i.v}</span>
+                <span className="text-xs text-muted-foreground">{i.t}</span>
+              </div>
+              <div className="mt-4 h-1.5 rounded-full bg-muted overflow-hidden">
+                <div className={`h-full ${bg[i.c]}`} style={{ width: "78%" }} />
+              </div>
             </div>
-            <div className="mt-4 h-1.5 rounded-full bg-muted overflow-hidden">
-              <div className={`h-full bg-${i.c}`} style={{ width: "78%" }} />
-            </div>
-          </div>
-        ))}
+          );
+        })}
       </div>
 
       <div className="mt-6 grid grid-cols-1 lg:grid-cols-2 gap-4">

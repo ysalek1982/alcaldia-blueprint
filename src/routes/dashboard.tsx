@@ -118,18 +118,24 @@ function Dashboard() {
             <span className="text-xs text-muted-foreground">Auditoría en vivo</span>
           </div>
           <ul className="divide-y divide-border">
-            {actividad.map((a, i) => (
-              <li key={i} className="px-5 py-3 flex items-start gap-3">
-                <div className={`mt-1 h-2 w-2 rounded-full bg-${a.c}`} />
-                <div className="flex-1 min-w-0">
-                  <div className="flex items-center justify-between gap-2">
-                    <span className="text-sm font-medium text-foreground">{a.t}</span>
-                    <span className="text-[11px] text-muted-foreground">{a.h}</span>
+            {actividad.map((a, i) => {
+              const dot: Record<string, string> = {
+                primary: "bg-primary", secondary: "bg-secondary",
+                accent: "bg-accent", destructive: "bg-destructive",
+              };
+              return (
+                <li key={i} className="px-5 py-3 flex items-start gap-3">
+                  <div className={`mt-1 h-2 w-2 rounded-full ${dot[a.c]}`} />
+                  <div className="flex-1 min-w-0">
+                    <div className="flex items-center justify-between gap-2">
+                      <span className="text-sm font-medium text-foreground">{a.t}</span>
+                      <span className="text-[11px] text-muted-foreground">{a.h}</span>
+                    </div>
+                    <div className="text-xs text-muted-foreground">{a.d} · <span className="text-foreground/70">{a.u}</span></div>
                   </div>
-                  <div className="text-xs text-muted-foreground">{a.d} · <span className="text-foreground/70">{a.u}</span></div>
-                </div>
-              </li>
-            ))}
+                </li>
+              );
+            })}
           </ul>
         </div>
 
