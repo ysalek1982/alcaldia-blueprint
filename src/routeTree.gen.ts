@@ -28,6 +28,10 @@ import { Route as RecaudacionesMoraRouteImport } from './routes/recaudaciones.mo
 import { Route as RecaudacionesDeudasRouteImport } from './routes/recaudaciones.deudas'
 import { Route as RecaudacionesContribuyentesRouteImport } from './routes/recaudaciones.contribuyentes'
 import { Route as RecaudacionesConceptosRouteImport } from './routes/recaudaciones.conceptos'
+import { Route as CatastroZonasRouteImport } from './routes/catastro.zonas'
+import { Route as CatastroTramitesRouteImport } from './routes/catastro.tramites'
+import { Route as CatastroPrediosRouteImport } from './routes/catastro.predios'
+import { Route as CatastroMapaRouteImport } from './routes/catastro.mapa'
 
 const RrhhRoute = RrhhRouteImport.update({
   id: '/rrhh',
@@ -125,10 +129,30 @@ const RecaudacionesConceptosRoute = RecaudacionesConceptosRouteImport.update({
   path: '/conceptos',
   getParentRoute: () => RecaudacionesRoute,
 } as any)
+const CatastroZonasRoute = CatastroZonasRouteImport.update({
+  id: '/zonas',
+  path: '/zonas',
+  getParentRoute: () => CatastroRoute,
+} as any)
+const CatastroTramitesRoute = CatastroTramitesRouteImport.update({
+  id: '/tramites',
+  path: '/tramites',
+  getParentRoute: () => CatastroRoute,
+} as any)
+const CatastroPrediosRoute = CatastroPrediosRouteImport.update({
+  id: '/predios',
+  path: '/predios',
+  getParentRoute: () => CatastroRoute,
+} as any)
+const CatastroMapaRoute = CatastroMapaRouteImport.update({
+  id: '/mapa',
+  path: '/mapa',
+  getParentRoute: () => CatastroRoute,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
-  '/catastro': typeof CatastroRoute
+  '/catastro': typeof CatastroRouteWithChildren
   '/configuracion': typeof ConfiguracionRoute
   '/dashboard': typeof DashboardRoute
   '/expedientes': typeof ExpedientesRoute
@@ -138,6 +162,10 @@ export interface FileRoutesByFullPath {
   '/recaudaciones': typeof RecaudacionesRouteWithChildren
   '/reportes': typeof ReportesRoute
   '/rrhh': typeof RrhhRouteWithChildren
+  '/catastro/mapa': typeof CatastroMapaRoute
+  '/catastro/predios': typeof CatastroPrediosRoute
+  '/catastro/tramites': typeof CatastroTramitesRoute
+  '/catastro/zonas': typeof CatastroZonasRoute
   '/recaudaciones/conceptos': typeof RecaudacionesConceptosRoute
   '/recaudaciones/contribuyentes': typeof RecaudacionesContribuyentesRoute
   '/recaudaciones/deudas': typeof RecaudacionesDeudasRoute
@@ -149,7 +177,7 @@ export interface FileRoutesByFullPath {
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
-  '/catastro': typeof CatastroRoute
+  '/catastro': typeof CatastroRouteWithChildren
   '/configuracion': typeof ConfiguracionRoute
   '/dashboard': typeof DashboardRoute
   '/expedientes': typeof ExpedientesRoute
@@ -159,6 +187,10 @@ export interface FileRoutesByTo {
   '/recaudaciones': typeof RecaudacionesRouteWithChildren
   '/reportes': typeof ReportesRoute
   '/rrhh': typeof RrhhRouteWithChildren
+  '/catastro/mapa': typeof CatastroMapaRoute
+  '/catastro/predios': typeof CatastroPrediosRoute
+  '/catastro/tramites': typeof CatastroTramitesRoute
+  '/catastro/zonas': typeof CatastroZonasRoute
   '/recaudaciones/conceptos': typeof RecaudacionesConceptosRoute
   '/recaudaciones/contribuyentes': typeof RecaudacionesContribuyentesRoute
   '/recaudaciones/deudas': typeof RecaudacionesDeudasRoute
@@ -171,7 +203,7 @@ export interface FileRoutesByTo {
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
-  '/catastro': typeof CatastroRoute
+  '/catastro': typeof CatastroRouteWithChildren
   '/configuracion': typeof ConfiguracionRoute
   '/dashboard': typeof DashboardRoute
   '/expedientes': typeof ExpedientesRoute
@@ -181,6 +213,10 @@ export interface FileRoutesById {
   '/recaudaciones': typeof RecaudacionesRouteWithChildren
   '/reportes': typeof ReportesRoute
   '/rrhh': typeof RrhhRouteWithChildren
+  '/catastro/mapa': typeof CatastroMapaRoute
+  '/catastro/predios': typeof CatastroPrediosRoute
+  '/catastro/tramites': typeof CatastroTramitesRoute
+  '/catastro/zonas': typeof CatastroZonasRoute
   '/recaudaciones/conceptos': typeof RecaudacionesConceptosRoute
   '/recaudaciones/contribuyentes': typeof RecaudacionesContribuyentesRoute
   '/recaudaciones/deudas': typeof RecaudacionesDeudasRoute
@@ -204,6 +240,10 @@ export interface FileRouteTypes {
     | '/recaudaciones'
     | '/reportes'
     | '/rrhh'
+    | '/catastro/mapa'
+    | '/catastro/predios'
+    | '/catastro/tramites'
+    | '/catastro/zonas'
     | '/recaudaciones/conceptos'
     | '/recaudaciones/contribuyentes'
     | '/recaudaciones/deudas'
@@ -225,6 +265,10 @@ export interface FileRouteTypes {
     | '/recaudaciones'
     | '/reportes'
     | '/rrhh'
+    | '/catastro/mapa'
+    | '/catastro/predios'
+    | '/catastro/tramites'
+    | '/catastro/zonas'
     | '/recaudaciones/conceptos'
     | '/recaudaciones/contribuyentes'
     | '/recaudaciones/deudas'
@@ -246,6 +290,10 @@ export interface FileRouteTypes {
     | '/recaudaciones'
     | '/reportes'
     | '/rrhh'
+    | '/catastro/mapa'
+    | '/catastro/predios'
+    | '/catastro/tramites'
+    | '/catastro/zonas'
     | '/recaudaciones/conceptos'
     | '/recaudaciones/contribuyentes'
     | '/recaudaciones/deudas'
@@ -258,7 +306,7 @@ export interface FileRouteTypes {
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
-  CatastroRoute: typeof CatastroRoute
+  CatastroRoute: typeof CatastroRouteWithChildren
   ConfiguracionRoute: typeof ConfiguracionRoute
   DashboardRoute: typeof DashboardRoute
   ExpedientesRoute: typeof ExpedientesRoute
@@ -405,8 +453,54 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof RecaudacionesConceptosRouteImport
       parentRoute: typeof RecaudacionesRoute
     }
+    '/catastro/zonas': {
+      id: '/catastro/zonas'
+      path: '/zonas'
+      fullPath: '/catastro/zonas'
+      preLoaderRoute: typeof CatastroZonasRouteImport
+      parentRoute: typeof CatastroRoute
+    }
+    '/catastro/tramites': {
+      id: '/catastro/tramites'
+      path: '/tramites'
+      fullPath: '/catastro/tramites'
+      preLoaderRoute: typeof CatastroTramitesRouteImport
+      parentRoute: typeof CatastroRoute
+    }
+    '/catastro/predios': {
+      id: '/catastro/predios'
+      path: '/predios'
+      fullPath: '/catastro/predios'
+      preLoaderRoute: typeof CatastroPrediosRouteImport
+      parentRoute: typeof CatastroRoute
+    }
+    '/catastro/mapa': {
+      id: '/catastro/mapa'
+      path: '/mapa'
+      fullPath: '/catastro/mapa'
+      preLoaderRoute: typeof CatastroMapaRouteImport
+      parentRoute: typeof CatastroRoute
+    }
   }
 }
+
+interface CatastroRouteChildren {
+  CatastroMapaRoute: typeof CatastroMapaRoute
+  CatastroPrediosRoute: typeof CatastroPrediosRoute
+  CatastroTramitesRoute: typeof CatastroTramitesRoute
+  CatastroZonasRoute: typeof CatastroZonasRoute
+}
+
+const CatastroRouteChildren: CatastroRouteChildren = {
+  CatastroMapaRoute: CatastroMapaRoute,
+  CatastroPrediosRoute: CatastroPrediosRoute,
+  CatastroTramitesRoute: CatastroTramitesRoute,
+  CatastroZonasRoute: CatastroZonasRoute,
+}
+
+const CatastroRouteWithChildren = CatastroRoute._addFileChildren(
+  CatastroRouteChildren,
+)
 
 interface RecaudacionesRouteChildren {
   RecaudacionesConceptosRoute: typeof RecaudacionesConceptosRoute
@@ -444,7 +538,7 @@ const RrhhRouteWithChildren = RrhhRoute._addFileChildren(RrhhRouteChildren)
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
-  CatastroRoute: CatastroRoute,
+  CatastroRoute: CatastroRouteWithChildren,
   ConfiguracionRoute: ConfiguracionRoute,
   DashboardRoute: DashboardRoute,
   ExpedientesRoute: ExpedientesRoute,
