@@ -28,6 +28,10 @@ import { Route as RecaudacionesMoraRouteImport } from './routes/recaudaciones.mo
 import { Route as RecaudacionesDeudasRouteImport } from './routes/recaudaciones.deudas'
 import { Route as RecaudacionesContribuyentesRouteImport } from './routes/recaudaciones.contribuyentes'
 import { Route as RecaudacionesConceptosRouteImport } from './routes/recaudaciones.conceptos'
+import { Route as PagosOrdenesRouteImport } from './routes/pagos.ordenes'
+import { Route as PagosMovimientosRouteImport } from './routes/pagos.movimientos'
+import { Route as PagosConciliacionRouteImport } from './routes/pagos.conciliacion'
+import { Route as PagosCanalesRouteImport } from './routes/pagos.canales'
 import { Route as CatastroZonasRouteImport } from './routes/catastro.zonas'
 import { Route as CatastroTramitesRouteImport } from './routes/catastro.tramites'
 import { Route as CatastroPrediosRouteImport } from './routes/catastro.predios'
@@ -129,6 +133,26 @@ const RecaudacionesConceptosRoute = RecaudacionesConceptosRouteImport.update({
   path: '/conceptos',
   getParentRoute: () => RecaudacionesRoute,
 } as any)
+const PagosOrdenesRoute = PagosOrdenesRouteImport.update({
+  id: '/ordenes',
+  path: '/ordenes',
+  getParentRoute: () => PagosRoute,
+} as any)
+const PagosMovimientosRoute = PagosMovimientosRouteImport.update({
+  id: '/movimientos',
+  path: '/movimientos',
+  getParentRoute: () => PagosRoute,
+} as any)
+const PagosConciliacionRoute = PagosConciliacionRouteImport.update({
+  id: '/conciliacion',
+  path: '/conciliacion',
+  getParentRoute: () => PagosRoute,
+} as any)
+const PagosCanalesRoute = PagosCanalesRouteImport.update({
+  id: '/canales',
+  path: '/canales',
+  getParentRoute: () => PagosRoute,
+} as any)
 const CatastroZonasRoute = CatastroZonasRouteImport.update({
   id: '/zonas',
   path: '/zonas',
@@ -157,7 +181,7 @@ export interface FileRoutesByFullPath {
   '/dashboard': typeof DashboardRoute
   '/expedientes': typeof ExpedientesRoute
   '/fiscalizacion': typeof FiscalizacionRoute
-  '/pagos': typeof PagosRoute
+  '/pagos': typeof PagosRouteWithChildren
   '/portal': typeof PortalRoute
   '/recaudaciones': typeof RecaudacionesRouteWithChildren
   '/reportes': typeof ReportesRoute
@@ -166,6 +190,10 @@ export interface FileRoutesByFullPath {
   '/catastro/predios': typeof CatastroPrediosRoute
   '/catastro/tramites': typeof CatastroTramitesRoute
   '/catastro/zonas': typeof CatastroZonasRoute
+  '/pagos/canales': typeof PagosCanalesRoute
+  '/pagos/conciliacion': typeof PagosConciliacionRoute
+  '/pagos/movimientos': typeof PagosMovimientosRoute
+  '/pagos/ordenes': typeof PagosOrdenesRoute
   '/recaudaciones/conceptos': typeof RecaudacionesConceptosRoute
   '/recaudaciones/contribuyentes': typeof RecaudacionesContribuyentesRoute
   '/recaudaciones/deudas': typeof RecaudacionesDeudasRoute
@@ -182,7 +210,7 @@ export interface FileRoutesByTo {
   '/dashboard': typeof DashboardRoute
   '/expedientes': typeof ExpedientesRoute
   '/fiscalizacion': typeof FiscalizacionRoute
-  '/pagos': typeof PagosRoute
+  '/pagos': typeof PagosRouteWithChildren
   '/portal': typeof PortalRoute
   '/recaudaciones': typeof RecaudacionesRouteWithChildren
   '/reportes': typeof ReportesRoute
@@ -191,6 +219,10 @@ export interface FileRoutesByTo {
   '/catastro/predios': typeof CatastroPrediosRoute
   '/catastro/tramites': typeof CatastroTramitesRoute
   '/catastro/zonas': typeof CatastroZonasRoute
+  '/pagos/canales': typeof PagosCanalesRoute
+  '/pagos/conciliacion': typeof PagosConciliacionRoute
+  '/pagos/movimientos': typeof PagosMovimientosRoute
+  '/pagos/ordenes': typeof PagosOrdenesRoute
   '/recaudaciones/conceptos': typeof RecaudacionesConceptosRoute
   '/recaudaciones/contribuyentes': typeof RecaudacionesContribuyentesRoute
   '/recaudaciones/deudas': typeof RecaudacionesDeudasRoute
@@ -208,7 +240,7 @@ export interface FileRoutesById {
   '/dashboard': typeof DashboardRoute
   '/expedientes': typeof ExpedientesRoute
   '/fiscalizacion': typeof FiscalizacionRoute
-  '/pagos': typeof PagosRoute
+  '/pagos': typeof PagosRouteWithChildren
   '/portal': typeof PortalRoute
   '/recaudaciones': typeof RecaudacionesRouteWithChildren
   '/reportes': typeof ReportesRoute
@@ -217,6 +249,10 @@ export interface FileRoutesById {
   '/catastro/predios': typeof CatastroPrediosRoute
   '/catastro/tramites': typeof CatastroTramitesRoute
   '/catastro/zonas': typeof CatastroZonasRoute
+  '/pagos/canales': typeof PagosCanalesRoute
+  '/pagos/conciliacion': typeof PagosConciliacionRoute
+  '/pagos/movimientos': typeof PagosMovimientosRoute
+  '/pagos/ordenes': typeof PagosOrdenesRoute
   '/recaudaciones/conceptos': typeof RecaudacionesConceptosRoute
   '/recaudaciones/contribuyentes': typeof RecaudacionesContribuyentesRoute
   '/recaudaciones/deudas': typeof RecaudacionesDeudasRoute
@@ -244,6 +280,10 @@ export interface FileRouteTypes {
     | '/catastro/predios'
     | '/catastro/tramites'
     | '/catastro/zonas'
+    | '/pagos/canales'
+    | '/pagos/conciliacion'
+    | '/pagos/movimientos'
+    | '/pagos/ordenes'
     | '/recaudaciones/conceptos'
     | '/recaudaciones/contribuyentes'
     | '/recaudaciones/deudas'
@@ -269,6 +309,10 @@ export interface FileRouteTypes {
     | '/catastro/predios'
     | '/catastro/tramites'
     | '/catastro/zonas'
+    | '/pagos/canales'
+    | '/pagos/conciliacion'
+    | '/pagos/movimientos'
+    | '/pagos/ordenes'
     | '/recaudaciones/conceptos'
     | '/recaudaciones/contribuyentes'
     | '/recaudaciones/deudas'
@@ -294,6 +338,10 @@ export interface FileRouteTypes {
     | '/catastro/predios'
     | '/catastro/tramites'
     | '/catastro/zonas'
+    | '/pagos/canales'
+    | '/pagos/conciliacion'
+    | '/pagos/movimientos'
+    | '/pagos/ordenes'
     | '/recaudaciones/conceptos'
     | '/recaudaciones/contribuyentes'
     | '/recaudaciones/deudas'
@@ -311,7 +359,7 @@ export interface RootRouteChildren {
   DashboardRoute: typeof DashboardRoute
   ExpedientesRoute: typeof ExpedientesRoute
   FiscalizacionRoute: typeof FiscalizacionRoute
-  PagosRoute: typeof PagosRoute
+  PagosRoute: typeof PagosRouteWithChildren
   PortalRoute: typeof PortalRoute
   RecaudacionesRoute: typeof RecaudacionesRouteWithChildren
   ReportesRoute: typeof ReportesRoute
@@ -453,6 +501,34 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof RecaudacionesConceptosRouteImport
       parentRoute: typeof RecaudacionesRoute
     }
+    '/pagos/ordenes': {
+      id: '/pagos/ordenes'
+      path: '/ordenes'
+      fullPath: '/pagos/ordenes'
+      preLoaderRoute: typeof PagosOrdenesRouteImport
+      parentRoute: typeof PagosRoute
+    }
+    '/pagos/movimientos': {
+      id: '/pagos/movimientos'
+      path: '/movimientos'
+      fullPath: '/pagos/movimientos'
+      preLoaderRoute: typeof PagosMovimientosRouteImport
+      parentRoute: typeof PagosRoute
+    }
+    '/pagos/conciliacion': {
+      id: '/pagos/conciliacion'
+      path: '/conciliacion'
+      fullPath: '/pagos/conciliacion'
+      preLoaderRoute: typeof PagosConciliacionRouteImport
+      parentRoute: typeof PagosRoute
+    }
+    '/pagos/canales': {
+      id: '/pagos/canales'
+      path: '/canales'
+      fullPath: '/pagos/canales'
+      preLoaderRoute: typeof PagosCanalesRouteImport
+      parentRoute: typeof PagosRoute
+    }
     '/catastro/zonas': {
       id: '/catastro/zonas'
       path: '/zonas'
@@ -502,6 +578,22 @@ const CatastroRouteWithChildren = CatastroRoute._addFileChildren(
   CatastroRouteChildren,
 )
 
+interface PagosRouteChildren {
+  PagosCanalesRoute: typeof PagosCanalesRoute
+  PagosConciliacionRoute: typeof PagosConciliacionRoute
+  PagosMovimientosRoute: typeof PagosMovimientosRoute
+  PagosOrdenesRoute: typeof PagosOrdenesRoute
+}
+
+const PagosRouteChildren: PagosRouteChildren = {
+  PagosCanalesRoute: PagosCanalesRoute,
+  PagosConciliacionRoute: PagosConciliacionRoute,
+  PagosMovimientosRoute: PagosMovimientosRoute,
+  PagosOrdenesRoute: PagosOrdenesRoute,
+}
+
+const PagosRouteWithChildren = PagosRoute._addFileChildren(PagosRouteChildren)
+
 interface RecaudacionesRouteChildren {
   RecaudacionesConceptosRoute: typeof RecaudacionesConceptosRoute
   RecaudacionesContribuyentesRoute: typeof RecaudacionesContribuyentesRoute
@@ -543,7 +635,7 @@ const rootRouteChildren: RootRouteChildren = {
   DashboardRoute: DashboardRoute,
   ExpedientesRoute: ExpedientesRoute,
   FiscalizacionRoute: FiscalizacionRoute,
-  PagosRoute: PagosRoute,
+  PagosRoute: PagosRouteWithChildren,
   PortalRoute: PortalRoute,
   RecaudacionesRoute: RecaudacionesRouteWithChildren,
   ReportesRoute: ReportesRoute,
