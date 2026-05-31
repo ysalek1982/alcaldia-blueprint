@@ -11,6 +11,7 @@
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as RrhhRouteImport } from './routes/rrhh'
 import { Route as ReportesRouteImport } from './routes/reportes'
+import { Route as RegistroRouteImport } from './routes/registro'
 import { Route as RecaudacionesRouteImport } from './routes/recaudaciones'
 import { Route as PortalRouteImport } from './routes/portal'
 import { Route as PagosRouteImport } from './routes/pagos'
@@ -58,6 +59,11 @@ const RrhhRoute = RrhhRouteImport.update({
 const ReportesRoute = ReportesRouteImport.update({
   id: '/reportes',
   path: '/reportes',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const RegistroRoute = RegistroRouteImport.update({
+  id: '/registro',
+  path: '/registro',
   getParentRoute: () => rootRouteImport,
 } as any)
 const RecaudacionesRoute = RecaudacionesRouteImport.update({
@@ -263,6 +269,7 @@ export interface FileRoutesByFullPath {
   '/pagos': typeof PagosRouteWithChildren
   '/portal': typeof PortalRouteWithChildren
   '/recaudaciones': typeof RecaudacionesRouteWithChildren
+  '/registro': typeof RegistroRoute
   '/reportes': typeof ReportesRouteWithChildren
   '/rrhh': typeof RrhhRouteWithChildren
   '/catastro/mapa': typeof CatastroMapaRoute
@@ -305,6 +312,7 @@ export interface FileRoutesByTo {
   '/pagos': typeof PagosRouteWithChildren
   '/portal': typeof PortalRouteWithChildren
   '/recaudaciones': typeof RecaudacionesRouteWithChildren
+  '/registro': typeof RegistroRoute
   '/reportes': typeof ReportesRouteWithChildren
   '/rrhh': typeof RrhhRouteWithChildren
   '/catastro/mapa': typeof CatastroMapaRoute
@@ -348,6 +356,7 @@ export interface FileRoutesById {
   '/pagos': typeof PagosRouteWithChildren
   '/portal': typeof PortalRouteWithChildren
   '/recaudaciones': typeof RecaudacionesRouteWithChildren
+  '/registro': typeof RegistroRoute
   '/reportes': typeof ReportesRouteWithChildren
   '/rrhh': typeof RrhhRouteWithChildren
   '/catastro/mapa': typeof CatastroMapaRoute
@@ -392,6 +401,7 @@ export interface FileRouteTypes {
     | '/pagos'
     | '/portal'
     | '/recaudaciones'
+    | '/registro'
     | '/reportes'
     | '/rrhh'
     | '/catastro/mapa'
@@ -434,6 +444,7 @@ export interface FileRouteTypes {
     | '/pagos'
     | '/portal'
     | '/recaudaciones'
+    | '/registro'
     | '/reportes'
     | '/rrhh'
     | '/catastro/mapa'
@@ -476,6 +487,7 @@ export interface FileRouteTypes {
     | '/pagos'
     | '/portal'
     | '/recaudaciones'
+    | '/registro'
     | '/reportes'
     | '/rrhh'
     | '/catastro/mapa'
@@ -519,6 +531,7 @@ export interface RootRouteChildren {
   PagosRoute: typeof PagosRouteWithChildren
   PortalRoute: typeof PortalRouteWithChildren
   RecaudacionesRoute: typeof RecaudacionesRouteWithChildren
+  RegistroRoute: typeof RegistroRoute
   ReportesRoute: typeof ReportesRouteWithChildren
   RrhhRoute: typeof RrhhRouteWithChildren
 }
@@ -537,6 +550,13 @@ declare module '@tanstack/react-router' {
       path: '/reportes'
       fullPath: '/reportes'
       preLoaderRoute: typeof ReportesRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/registro': {
+      id: '/registro'
+      path: '/registro'
+      fullPath: '/registro'
+      preLoaderRoute: typeof RegistroRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/recaudaciones': {
@@ -961,6 +981,7 @@ const rootRouteChildren: RootRouteChildren = {
   PagosRoute: PagosRouteWithChildren,
   PortalRoute: PortalRouteWithChildren,
   RecaudacionesRoute: RecaudacionesRouteWithChildren,
+  RegistroRoute: RegistroRoute,
   ReportesRoute: ReportesRouteWithChildren,
   RrhhRoute: RrhhRouteWithChildren,
 }
