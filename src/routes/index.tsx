@@ -1,7 +1,8 @@
 import { createFileRoute, Link, useNavigate } from "@tanstack/react-router";
-import { useState } from "react";
-import { Building2, ShieldCheck, ArrowRight } from "lucide-react";
+import { useEffect, useState } from "react";
+import { Building2, ShieldCheck, ArrowRight, AlertCircle } from "lucide-react";
 import logo from "@/assets/logo-buenavista.svg";
+import { useAuth } from "@/lib/auth";
 
 export const Route = createFileRoute("/")({
   head: () => ({
@@ -17,22 +18,35 @@ export const Route = createFileRoute("/")({
 
 function Login() {
   const navigate = useNavigate();
+  const { signIn, isAuthenticated, loading: authLoading } = useAuth();
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
+  const [error, setError] = useState<string | null>(null);
 
-  const submit = (e: React.FormEvent) => {
+  useEffect(() => {
+    if (!authLoading && isAuthenticated) {
+      navigate({ to: "/dashboard", replace: true });
+    }
+  }, [authLoading, isAuthenticated, navigate]);
+
+  const submit = async (e: React.FormEvent) => {
     e.preventDefault();
+    setError(null);
     setLoading(true);
-    setTimeout(() => navigate({ to: "/dashboard" }), 600);
+    const { error: err } = await signIn(email.trim(), password);
+    setLoading(false);
+    if (err) {
+      setError(err === "Invalid login credentials" ? "Credenciales incorrectas." : err);
+      return;
+    }
+    navigate({ to: "/dashboard", replace: true });
   };
 
   return (
     <div className="min-h-screen grid lg:grid-cols-2 bg-background">
-      {/* Lado institucional */}
       <div className="relative hidden lg:flex flex-col justify-between p-12 text-sidebar-foreground overflow-hidden"
-        style={{
-          background:
-            "linear-gradient(135deg, oklch(0.34 0.08 150) 0%, oklch(0.42 0.07 195) 100%)",
-        }}>
+        style={{ background: "linear-gradient(135deg, oklch(0.34 0.08 150) 0%, oklch(0.42 0.07 195) 100%)" }}>
         <div className="absolute inset-0 opacity-[0.04]"
           style={{ backgroundImage: "radial-gradient(circle at 1px 1px, white 1px, transparent 0)", backgroundSize: "24px 24px" }} />
         <div className="relative flex items-center gap-3">
@@ -60,11 +74,7 @@ function Login() {
             auditoría y reportes gerenciales en tiempo real.
           </p>
           <div className="grid grid-cols-3 gap-3 pt-4">
-            {[
-              { k: "28", v: "Módulos" },
-              { k: "100%", v: "Auditable" },
-              { k: "24/7", v: "Disponible" },
-            ].map((s) => (
+            {[{ k: "28", v: "Módulos" }, { k: "100%", v: "Auditable" }, { k: "24/7", v: "Disponible" }].map((s) => (
               <div key={s.v} className="rounded-md bg-white/5 border border-white/10 p-3">
                 <div className="text-xl font-semibold text-accent">{s.k}</div>
                 <div className="text-[11px] text-white/70">{s.v}</div>
@@ -78,7 +88,6 @@ function Login() {
         </div>
       </div>
 
-      {/* Formulario */}
       <div className="flex items-center justify-center p-6 sm:p-10">
         <div className="w-full max-w-md">
           <div className="lg:hidden flex items-center gap-3 mb-8">
@@ -97,29 +106,35 @@ function Login() {
           </p>
 
           <form onSubmit={submit} className="mt-8 space-y-4">
+            {error && (
+              <div className="flex items-start gap-2 p-3 rounded-md bg-destructive/10 text-destructive text-xs">
+                <AlertCircle className="h-4 w-4 shrink-0 mt-0.5" />
+                <span>{error}</span>
+              </div>
+            )}
             <div>
-              <label className="text-xs font-medium text-foreground">Usuario / CI</label>
+              <label className="text-xs font-medium text-foreground">Correo institucional</label>
               <input
-                type="text"
-                defaultValue="admin"
+                type="email"
+                required
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
                 className="mt-1 w-full h-11 px-3 rounded-md border border-input bg-card text-sm focus:outline-none focus:ring-2 focus:ring-ring"
-                placeholder="ej. 1234567"
+                placeholder="nombre.apellido@buenavista.gob.bo"
+                autoComplete="email"
               />
             </div>
             <div>
               <label className="text-xs font-medium text-foreground">Contraseña</label>
               <input
                 type="password"
-                defaultValue="••••••••"
+                required
+                minLength={6}
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
                 className="mt-1 w-full h-11 px-3 rounded-md border border-input bg-card text-sm focus:outline-none focus:ring-2 focus:ring-ring"
+                autoComplete="current-password"
               />
-            </div>
-            <div className="flex items-center justify-between text-xs">
-              <label className="flex items-center gap-2 text-muted-foreground">
-                <input type="checkbox" defaultChecked className="accent-primary" />
-                Mantener sesión segura
-              </label>
-              <a className="text-primary font-medium hover:underline" href="#">¿Olvidó su contraseña?</a>
             </div>
             <button
               type="submit"
@@ -129,6 +144,13 @@ function Login() {
               {loading ? "Validando…" : <>Ingresar <ArrowRight className="h-4 w-4" /></>}
             </button>
           </form>
+
+          <div className="mt-4 text-xs text-center text-muted-foreground">
+            ¿No tiene cuenta?{" "}
+            <Link to="/registro" className="text-primary font-medium hover:underline">
+              Solicitar registro
+            </Link>
+          </div>
 
           <div className="mt-6 grid grid-cols-2 gap-3 text-xs">
             <div className="flex items-start gap-2 p-3 rounded-md bg-muted/60">

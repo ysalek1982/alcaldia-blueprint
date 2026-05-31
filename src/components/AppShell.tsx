@@ -1,6 +1,14 @@
-import type { ReactNode } from "react";
+import { useEffect, type ReactNode } from "react";
+import { useNavigate, useRouterState } from "@tanstack/react-router";
 import { AppSidebar } from "./AppSidebar";
-import { Bell, Search } from "lucide-react";
+import { Bell, Search, LogOut } from "lucide-react";
+import { useAuth } from "@/lib/auth";
+
+const PUBLIC_PREFIXES = ["/portal"];
+
+function isPublic(path: string) {
+  return PUBLIC_PREFIXES.some((p) => path === p || path.startsWith(p + "/"));
+}
 
 export function AppShell({
   title,
@@ -13,9 +21,34 @@ export function AppShell({
   actions?: ReactNode;
   children: ReactNode;
 }) {
+  const navigate = useNavigate();
+  const path = useRouterState({ select: (s) => s.location.pathname });
+  const { isAuthenticated, loading, profile, roles, signOut, user } = useAuth();
+
+  const requiresAuth = !isPublic(path);
+
+  useEffect(() => {
+    if (requiresAuth && !loading && !isAuthenticated) {
+      navigate({ to: "/", replace: true });
+    }
+  }, [requiresAuth, loading, isAuthenticated, navigate]);
+
+  if (requiresAuth && (loading || !isAuthenticated)) {
+    return (
+      <div className="min-h-screen flex items-center justify-center bg-background">
+        <div className="text-sm text-muted-foreground">Verificando sesión…</div>
+      </div>
+    );
+  }
+
+  const displayName = profile?.nombre_completo || user?.email || "Invitado";
+  const initials = displayName
+    .split(" ").filter(Boolean).slice(0, 2).map((s) => s[0]?.toUpperCase()).join("") || "U";
+  const primaryRole = roles[0] ?? (isAuthenticated ? "consulta" : "ciudadano");
+
   return (
     <div className="flex min-h-screen bg-background">
-      <AppSidebar />
+      <AppSidebar onSignOut={signOut} />
       <div className="flex-1 flex flex-col min-w-0">
         <header className="h-16 border-b border-border bg-card flex items-center px-6 gap-4">
           <div className="flex-1 min-w-0">
@@ -32,12 +65,21 @@ export function AppShell({
           </button>
           <div className="flex items-center gap-2 pl-3 border-l border-border">
             <div className="h-9 w-9 rounded-full bg-primary text-primary-foreground flex items-center justify-center text-xs font-semibold">
-              JG
+              {initials}
             </div>
             <div className="hidden sm:block leading-tight">
-              <div className="text-xs font-medium">J. González</div>
-              <div className="text-[10px] text-muted-foreground">Administrador</div>
+              <div className="text-xs font-medium truncate max-w-[160px]">{displayName}</div>
+              <div className="text-[10px] text-muted-foreground capitalize">{primaryRole}</div>
             </div>
+            {isAuthenticated && (
+              <button
+                onClick={() => signOut().then(() => navigate({ to: "/" }))}
+                title="Cerrar sesión"
+                className="h-9 w-9 rounded-md hover:bg-muted flex items-center justify-center text-muted-foreground ml-1"
+              >
+                <LogOut className="h-4 w-4" />
+              </button>
+            )}
           </div>
         </header>
         {actions && (

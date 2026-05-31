@@ -18,7 +18,7 @@ const nav = [
   { to: "/configuracion", label: "Configuración", icon: Settings },
 ] as const;
 
-export function AppSidebar() {
+export function AppSidebar({ onSignOut }: { onSignOut?: () => Promise<void> | void }) {
   const path = useRouterState({ select: (s) => s.location.pathname });
   return (
     <aside className="hidden md:flex w-72 shrink-0 flex-col bg-sidebar text-sidebar-foreground border-r border-sidebar-border">
@@ -53,14 +53,14 @@ export function AppSidebar() {
         })}
       </nav>
       <div className="p-3 border-t border-sidebar-border">
-        <Link
-          to="/"
-          className="flex items-center gap-2 px-3 py-2 rounded-md text-sm text-sidebar-foreground/85 hover:bg-sidebar-accent"
+        <button
+          onClick={() => onSignOut?.()}
+          className="w-full flex items-center gap-2 px-3 py-2 rounded-md text-sm text-sidebar-foreground/85 hover:bg-sidebar-accent"
         >
           <LogOut className="h-4 w-4" /> Cerrar sesión
-        </Link>
+        </button>
         <div className="mt-3 text-[10px] text-sidebar-foreground/55 px-3">
-          v1.0 · Prototipo · Compatible con Lovable Cloud
+          v1.0 · Conectado a Lovable Cloud
         </div>
       </div>
     </aside>
