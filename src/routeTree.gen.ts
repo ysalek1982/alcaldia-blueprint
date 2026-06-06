@@ -14,6 +14,7 @@ import { Route as ReportesRouteImport } from './routes/reportes'
 import { Route as RegistroRouteImport } from './routes/registro'
 import { Route as RecaudacionesRouteImport } from './routes/recaudaciones'
 import { Route as PortalRouteImport } from './routes/portal'
+import { Route as PerfilRouteImport } from './routes/perfil'
 import { Route as PagosRouteImport } from './routes/pagos'
 import { Route as FiscalizacionRouteImport } from './routes/fiscalizacion'
 import { Route as ExpedientesRouteImport } from './routes/expedientes'
@@ -74,6 +75,11 @@ const RecaudacionesRoute = RecaudacionesRouteImport.update({
 const PortalRoute = PortalRouteImport.update({
   id: '/portal',
   path: '/portal',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const PerfilRoute = PerfilRouteImport.update({
+  id: '/perfil',
+  path: '/perfil',
   getParentRoute: () => rootRouteImport,
 } as any)
 const PagosRoute = PagosRouteImport.update({
@@ -267,6 +273,7 @@ export interface FileRoutesByFullPath {
   '/expedientes': typeof ExpedientesRouteWithChildren
   '/fiscalizacion': typeof FiscalizacionRouteWithChildren
   '/pagos': typeof PagosRouteWithChildren
+  '/perfil': typeof PerfilRoute
   '/portal': typeof PortalRouteWithChildren
   '/recaudaciones': typeof RecaudacionesRouteWithChildren
   '/registro': typeof RegistroRoute
@@ -310,6 +317,7 @@ export interface FileRoutesByTo {
   '/expedientes': typeof ExpedientesRouteWithChildren
   '/fiscalizacion': typeof FiscalizacionRouteWithChildren
   '/pagos': typeof PagosRouteWithChildren
+  '/perfil': typeof PerfilRoute
   '/portal': typeof PortalRouteWithChildren
   '/recaudaciones': typeof RecaudacionesRouteWithChildren
   '/registro': typeof RegistroRoute
@@ -354,6 +362,7 @@ export interface FileRoutesById {
   '/expedientes': typeof ExpedientesRouteWithChildren
   '/fiscalizacion': typeof FiscalizacionRouteWithChildren
   '/pagos': typeof PagosRouteWithChildren
+  '/perfil': typeof PerfilRoute
   '/portal': typeof PortalRouteWithChildren
   '/recaudaciones': typeof RecaudacionesRouteWithChildren
   '/registro': typeof RegistroRoute
@@ -399,6 +408,7 @@ export interface FileRouteTypes {
     | '/expedientes'
     | '/fiscalizacion'
     | '/pagos'
+    | '/perfil'
     | '/portal'
     | '/recaudaciones'
     | '/registro'
@@ -442,6 +452,7 @@ export interface FileRouteTypes {
     | '/expedientes'
     | '/fiscalizacion'
     | '/pagos'
+    | '/perfil'
     | '/portal'
     | '/recaudaciones'
     | '/registro'
@@ -485,6 +496,7 @@ export interface FileRouteTypes {
     | '/expedientes'
     | '/fiscalizacion'
     | '/pagos'
+    | '/perfil'
     | '/portal'
     | '/recaudaciones'
     | '/registro'
@@ -529,6 +541,7 @@ export interface RootRouteChildren {
   ExpedientesRoute: typeof ExpedientesRouteWithChildren
   FiscalizacionRoute: typeof FiscalizacionRouteWithChildren
   PagosRoute: typeof PagosRouteWithChildren
+  PerfilRoute: typeof PerfilRoute
   PortalRoute: typeof PortalRouteWithChildren
   RecaudacionesRoute: typeof RecaudacionesRouteWithChildren
   RegistroRoute: typeof RegistroRoute
@@ -571,6 +584,13 @@ declare module '@tanstack/react-router' {
       path: '/portal'
       fullPath: '/portal'
       preLoaderRoute: typeof PortalRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/perfil': {
+      id: '/perfil'
+      path: '/perfil'
+      fullPath: '/perfil'
+      preLoaderRoute: typeof PerfilRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/pagos': {
@@ -979,6 +999,7 @@ const rootRouteChildren: RootRouteChildren = {
   ExpedientesRoute: ExpedientesRouteWithChildren,
   FiscalizacionRoute: FiscalizacionRouteWithChildren,
   PagosRoute: PagosRouteWithChildren,
+  PerfilRoute: PerfilRoute,
   PortalRoute: PortalRouteWithChildren,
   RecaudacionesRoute: RecaudacionesRouteWithChildren,
   RegistroRoute: RegistroRoute,
@@ -988,3 +1009,13 @@ const rootRouteChildren: RootRouteChildren = {
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
   ._addFileTypes<FileRouteTypes>()
+
+import type { getRouter } from './router.tsx'
+import type { startInstance } from './start.ts'
+declare module '@tanstack/react-start' {
+  interface Register {
+    ssr: true
+    router: Awaited<ReturnType<typeof getRouter>>
+    config: Awaited<ReturnType<typeof startInstance.getOptions>>
+  }
+}
