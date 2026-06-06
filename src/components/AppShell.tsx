@@ -1,8 +1,9 @@
 import { useEffect, type ReactNode } from "react";
 import { useNavigate, useRouterState } from "@tanstack/react-router";
 import { AppSidebar } from "./AppSidebar";
-import { Bell, Search, LogOut } from "lucide-react";
+import { HeaderActions } from "./HeaderActions";
 import { useAuth } from "@/lib/auth";
+
 
 const PUBLIC_PREFIXES = ["/portal"];
 
