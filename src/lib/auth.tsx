@@ -101,6 +101,10 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   };
 
   const signOut = async () => {
+    if (demo) {
+      localStorage.removeItem(DEMO_KEY);
+      setDemo(false);
+    }
     await supabase.auth.signOut();
     setSession(null);
     setProfile(null);
@@ -111,15 +115,26 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     if (session?.user) await loadProfileAndRoles(session.user.id);
   };
 
+  const enterDemo = () => {
+    localStorage.setItem(DEMO_KEY, "1");
+    setDemo(true);
+  };
+
+  const effectiveAuth = !!session || demo;
+  const effectiveProfile = profile ?? (demo ? DEMO_PROFILE : null);
+  const effectiveRoles = roles.length ? roles : (demo ? (["administrador"] as AppRole[]) : []);
+
   const value: AuthState = {
     session,
     user: session?.user ?? null,
-    profile,
-    roles,
+    profile: effectiveProfile,
+    roles: effectiveRoles,
     loading,
-    isAuthenticated: !!session,
-    hasRole: (r) => roles.includes(r),
-    hasAnyRole: (rs) => rs.some((r) => roles.includes(r)),
+    isAuthenticated: effectiveAuth,
+    isDemo: demo,
+    enterDemo,
+    hasRole: (r) => effectiveRoles.includes(r),
+    hasAnyRole: (rs) => rs.some((r) => effectiveRoles.includes(r)),
     signIn,
     signUp,
     signOut,
@@ -134,3 +149,4 @@ export function useAuth(): AuthState {
   if (!ctx) throw new Error("useAuth debe usarse dentro de <AuthProvider>");
   return ctx;
 }
+
