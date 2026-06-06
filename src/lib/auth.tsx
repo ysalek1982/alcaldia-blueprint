@@ -27,7 +27,6 @@ type AuthState = {
   hasRole: (r: AppRole) => boolean;
   hasAnyRole: (rs: AppRole[]) => boolean;
 
-  hasAnyRole: (rs: AppRole[]) => boolean;
   signIn: (email: string, password: string) => Promise<{ error: string | null }>;
   signUp: (input: {
     email: string;
