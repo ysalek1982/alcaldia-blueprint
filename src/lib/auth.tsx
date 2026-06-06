@@ -22,7 +22,11 @@ type AuthState = {
   roles: AppRole[];
   loading: boolean;
   isAuthenticated: boolean;
+  isDemo: boolean;
+  enterDemo: () => void;
   hasRole: (r: AppRole) => boolean;
+  hasAnyRole: (rs: AppRole[]) => boolean;
+
   hasAnyRole: (rs: AppRole[]) => boolean;
   signIn: (email: string, password: string) => Promise<{ error: string | null }>;
   signUp: (input: {
