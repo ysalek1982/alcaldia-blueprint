@@ -1,8 +1,9 @@
 import { useEffect, type ReactNode } from "react";
 import { useNavigate, useRouterState } from "@tanstack/react-router";
 import { AppSidebar } from "./AppSidebar";
-import { Bell, Search, LogOut } from "lucide-react";
+import { HeaderActions } from "./HeaderActions";
 import { useAuth } from "@/lib/auth";
+
 
 const PUBLIC_PREFIXES = ["/portal"];
 
@@ -55,32 +56,14 @@ export function AppShell({
             <h1 className="text-lg font-semibold text-foreground truncate">{title}</h1>
             {subtitle && <p className="text-xs text-muted-foreground truncate">{subtitle}</p>}
           </div>
-          <div className="hidden lg:flex items-center gap-2 px-3 h-9 rounded-md bg-muted text-muted-foreground text-sm w-72">
-            <Search className="h-4 w-4" />
-            <span className="text-xs">Buscar contribuyente, predio, expediente…</span>
-          </div>
-          <button className="relative h-9 w-9 rounded-md hover:bg-muted flex items-center justify-center text-muted-foreground">
-            <Bell className="h-4 w-4" />
-            <span className="absolute top-1.5 right-1.5 h-2 w-2 rounded-full bg-accent" />
-          </button>
-          <div className="flex items-center gap-2 pl-3 border-l border-border">
-            <div className="h-9 w-9 rounded-full bg-primary text-primary-foreground flex items-center justify-center text-xs font-semibold">
-              {initials}
-            </div>
-            <div className="hidden sm:block leading-tight">
-              <div className="text-xs font-medium truncate max-w-[160px]">{displayName}</div>
-              <div className="text-[10px] text-muted-foreground capitalize">{primaryRole}</div>
-            </div>
-            {isAuthenticated && (
-              <button
-                onClick={() => signOut().then(() => navigate({ to: "/" }))}
-                title="Cerrar sesión"
-                className="h-9 w-9 rounded-md hover:bg-muted flex items-center justify-center text-muted-foreground ml-1"
-              >
-                <LogOut className="h-4 w-4" />
-              </button>
-            )}
-          </div>
+          <HeaderActions
+            displayName={displayName}
+            initials={initials}
+            primaryRole={primaryRole}
+            isAuthenticated={isAuthenticated}
+            onSignOut={() => signOut().then(() => navigate({ to: "/" }))}
+          />
+
         </header>
         {actions && (
           <div className="px-6 py-3 border-b border-border bg-card/50 flex flex-wrap gap-2">
