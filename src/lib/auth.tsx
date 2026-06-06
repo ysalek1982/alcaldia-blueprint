@@ -22,8 +22,11 @@ type AuthState = {
   roles: AppRole[];
   loading: boolean;
   isAuthenticated: boolean;
+  isDemo: boolean;
+  enterDemo: () => void;
   hasRole: (r: AppRole) => boolean;
   hasAnyRole: (rs: AppRole[]) => boolean;
+
   signIn: (email: string, password: string) => Promise<{ error: string | null }>;
   signUp: (input: {
     email: string;
@@ -38,11 +41,22 @@ type AuthState = {
 
 const AuthCtx = createContext<AuthState | null>(null);
 
+const DEMO_KEY = "gam-bv-demo-mode";
+const DEMO_PROFILE: Profile = {
+  id: "demo", user_id: "demo",
+  nombre_completo: "Usuario Demo",
+  secretaria: "Secretaría General",
+  cargo: "Explorador del prototipo",
+  telefono: null, avatar_url: null, activo: true,
+};
+
 export function AuthProvider({ children }: { children: ReactNode }) {
   const [session, setSession] = useState<Session | null>(null);
   const [profile, setProfile] = useState<Profile | null>(null);
   const [roles, setRoles] = useState<AppRole[]>([]);
   const [loading, setLoading] = useState(true);
+  const [demo, setDemo] = useState<boolean>(() =>
+    typeof window !== "undefined" && localStorage.getItem(DEMO_KEY) === "1");
 
   const loadProfileAndRoles = async (userId: string) => {
     const [{ data: p }, { data: r }] = await Promise.all([
@@ -54,18 +68,15 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   };
 
   useEffect(() => {
-    // 1. Listener primero (no async dentro del callback)
     const { data: { subscription } } = supabase.auth.onAuthStateChange((_event, s) => {
       setSession(s);
       if (s?.user) {
-        // defer para evitar deadlock con Supabase
         setTimeout(() => loadProfileAndRoles(s.user.id), 0);
       } else {
         setProfile(null);
         setRoles([]);
       }
     });
-    // 2. Hidratar sesión existente
     supabase.auth.getSession().then(async ({ data }) => {
       setSession(data.session);
       if (data.session?.user) await loadProfileAndRoles(data.session.user.id);
@@ -73,6 +84,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     });
     return () => subscription.unsubscribe();
   }, []);
+
 
   const signIn = async (email: string, password: string) => {
     const { error } = await supabase.auth.signInWithPassword({ email, password });
@@ -92,6 +104,10 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   };
 
   const signOut = async () => {
+    if (demo) {
+      localStorage.removeItem(DEMO_KEY);
+      setDemo(false);
+    }
     await supabase.auth.signOut();
     setSession(null);
     setProfile(null);
@@ -102,15 +118,26 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     if (session?.user) await loadProfileAndRoles(session.user.id);
   };
 
+  const enterDemo = () => {
+    localStorage.setItem(DEMO_KEY, "1");
+    setDemo(true);
+  };
+
+  const effectiveAuth = !!session || demo;
+  const effectiveProfile = profile ?? (demo ? DEMO_PROFILE : null);
+  const effectiveRoles = roles.length ? roles : (demo ? (["administrador"] as AppRole[]) : []);
+
   const value: AuthState = {
     session,
     user: session?.user ?? null,
-    profile,
-    roles,
+    profile: effectiveProfile,
+    roles: effectiveRoles,
     loading,
-    isAuthenticated: !!session,
-    hasRole: (r) => roles.includes(r),
-    hasAnyRole: (rs) => rs.some((r) => roles.includes(r)),
+    isAuthenticated: effectiveAuth,
+    isDemo: demo,
+    enterDemo,
+    hasRole: (r) => effectiveRoles.includes(r),
+    hasAnyRole: (rs) => rs.some((r) => effectiveRoles.includes(r)),
     signIn,
     signUp,
     signOut,
@@ -125,3 +152,4 @@ export function useAuth(): AuthState {
   if (!ctx) throw new Error("useAuth debe usarse dentro de <AuthProvider>");
   return ctx;
 }
+
