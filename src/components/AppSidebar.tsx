@@ -59,6 +59,26 @@ export function AppSidebar({ onSignOut }: { onSignOut?: () => Promise<void> | vo
           );
         })}
       </nav>
+      <div className="px-2 py-2 border-t border-sidebar-border space-y-0.5">
+        {navSecondary.map((item) => {
+          const Icon = item.icon;
+          const active = path === item.to || path.startsWith(item.to + "/");
+          return (
+            <Link
+              key={item.to}
+              to={item.to}
+              className={`flex items-center gap-3 px-3 py-2 rounded-md text-sm transition-colors ${
+                active
+                  ? "bg-sidebar-primary text-sidebar-primary-foreground font-medium shadow-sm"
+                  : "text-sidebar-foreground/85 hover:bg-sidebar-accent hover:text-sidebar-accent-foreground"
+              }`}
+            >
+              <Icon className="h-4 w-4" />
+              <span>{item.label}</span>
+            </Link>
+          );
+        })}
+      </div>
       <div className="p-3 border-t border-sidebar-border">
         <button
           onClick={() => onSignOut?.()}
@@ -70,6 +90,7 @@ export function AppSidebar({ onSignOut }: { onSignOut?: () => Promise<void> | vo
           v1.0 · Conectado a Lovable Cloud
         </div>
       </div>
+
     </aside>
   );
 }
