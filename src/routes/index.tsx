@@ -146,12 +146,27 @@ function Login() {
             </button>
           </form>
 
+          <div className="mt-4 flex items-center gap-3">
+            <div className="h-px flex-1 bg-border" />
+            <span className="text-[10px] uppercase tracking-widest text-muted-foreground">o</span>
+            <div className="h-px flex-1 bg-border" />
+          </div>
+
+          <button
+            type="button"
+            onClick={() => { enterDemo(); navigate({ to: "/dashboard", replace: true }); }}
+            className="mt-4 w-full h-11 rounded-md border border-dashed border-primary/50 text-primary text-sm font-medium hover:bg-primary/5 transition-colors"
+          >
+            Explorar como demo (sin registro)
+          </button>
+
           <div className="mt-4 text-xs text-center text-muted-foreground">
             ¿No tiene cuenta?{" "}
             <Link to="/registro" className="text-primary font-medium hover:underline">
               Solicitar registro
             </Link>
           </div>
+
 
           <div className="mt-6 grid grid-cols-2 gap-3 text-xs">
             <div className="flex items-start gap-2 p-3 rounded-md bg-muted/60">
