@@ -21,6 +21,7 @@ import { Route as ExpedientesRouteImport } from './routes/expedientes'
 import { Route as DashboardRouteImport } from './routes/dashboard'
 import { Route as ConfiguracionRouteImport } from './routes/configuracion'
 import { Route as CatastroRouteImport } from './routes/catastro'
+import { Route as AyudaRouteImport } from './routes/ayuda'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as RrhhSolicitudesRouteImport } from './routes/rrhh.solicitudes'
 import { Route as RrhhPlanillasRouteImport } from './routes/rrhh.planillas'
@@ -110,6 +111,11 @@ const ConfiguracionRoute = ConfiguracionRouteImport.update({
 const CatastroRoute = CatastroRouteImport.update({
   id: '/catastro',
   path: '/catastro',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AyudaRoute = AyudaRouteImport.update({
+  id: '/ayuda',
+  path: '/ayuda',
   getParentRoute: () => rootRouteImport,
 } as any)
 const IndexRoute = IndexRouteImport.update({
@@ -267,6 +273,7 @@ const CatastroMapaRoute = CatastroMapaRouteImport.update({
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/ayuda': typeof AyudaRoute
   '/catastro': typeof CatastroRouteWithChildren
   '/configuracion': typeof ConfiguracionRouteWithChildren
   '/dashboard': typeof DashboardRoute
@@ -311,6 +318,7 @@ export interface FileRoutesByFullPath {
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/ayuda': typeof AyudaRoute
   '/catastro': typeof CatastroRouteWithChildren
   '/configuracion': typeof ConfiguracionRouteWithChildren
   '/dashboard': typeof DashboardRoute
@@ -356,6 +364,7 @@ export interface FileRoutesByTo {
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/ayuda': typeof AyudaRoute
   '/catastro': typeof CatastroRouteWithChildren
   '/configuracion': typeof ConfiguracionRouteWithChildren
   '/dashboard': typeof DashboardRoute
@@ -402,6 +411,7 @@ export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
     | '/'
+    | '/ayuda'
     | '/catastro'
     | '/configuracion'
     | '/dashboard'
@@ -446,6 +456,7 @@ export interface FileRouteTypes {
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
+    | '/ayuda'
     | '/catastro'
     | '/configuracion'
     | '/dashboard'
@@ -490,6 +501,7 @@ export interface FileRouteTypes {
   id:
     | '__root__'
     | '/'
+    | '/ayuda'
     | '/catastro'
     | '/configuracion'
     | '/dashboard'
@@ -535,6 +547,7 @@ export interface FileRouteTypes {
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  AyudaRoute: typeof AyudaRoute
   CatastroRoute: typeof CatastroRouteWithChildren
   ConfiguracionRoute: typeof ConfiguracionRouteWithChildren
   DashboardRoute: typeof DashboardRoute
@@ -633,6 +646,13 @@ declare module '@tanstack/react-router' {
       path: '/catastro'
       fullPath: '/catastro'
       preLoaderRoute: typeof CatastroRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/ayuda': {
+      id: '/ayuda'
+      path: '/ayuda'
+      fullPath: '/ayuda'
+      preLoaderRoute: typeof AyudaRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/': {
@@ -993,6 +1013,7 @@ const RrhhRouteWithChildren = RrhhRoute._addFileChildren(RrhhRouteChildren)
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  AyudaRoute: AyudaRoute,
   CatastroRoute: CatastroRouteWithChildren,
   ConfiguracionRoute: ConfiguracionRouteWithChildren,
   DashboardRoute: DashboardRoute,

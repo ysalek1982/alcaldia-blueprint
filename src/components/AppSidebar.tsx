@@ -2,6 +2,7 @@ import { Link, useRouterState } from "@tanstack/react-router";
 import {
   LayoutDashboard, Users, Receipt, MapPinned, CreditCard,
   Globe, ShieldCheck, BarChart3, FileText, Settings, LogOut,
+  User, HelpCircle,
 } from "lucide-react";
 import logo from "@/assets/logo-buenavista.svg";
 
@@ -17,6 +18,12 @@ const nav = [
   { to: "/expedientes", label: "Expedientes", icon: FileText },
   { to: "/configuracion", label: "Configuración", icon: Settings },
 ] as const;
+
+const navSecondary = [
+  { to: "/perfil", label: "Mi perfil", icon: User },
+  { to: "/ayuda", label: "Ayuda", icon: HelpCircle },
+] as const;
+
 
 export function AppSidebar({ onSignOut }: { onSignOut?: () => Promise<void> | void }) {
   const path = useRouterState({ select: (s) => s.location.pathname });
