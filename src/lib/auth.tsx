@@ -38,11 +38,22 @@ type AuthState = {
 
 const AuthCtx = createContext<AuthState | null>(null);
 
+const DEMO_KEY = "gam-bv-demo-mode";
+const DEMO_PROFILE: Profile = {
+  id: "demo", user_id: "demo",
+  nombre_completo: "Usuario Demo",
+  secretaria: "Secretaría General",
+  cargo: "Explorador del prototipo",
+  telefono: null, avatar_url: null, activo: true,
+};
+
 export function AuthProvider({ children }: { children: ReactNode }) {
   const [session, setSession] = useState<Session | null>(null);
   const [profile, setProfile] = useState<Profile | null>(null);
   const [roles, setRoles] = useState<AppRole[]>([]);
   const [loading, setLoading] = useState(true);
+  const [demo, setDemo] = useState<boolean>(() =>
+    typeof window !== "undefined" && localStorage.getItem(DEMO_KEY) === "1");
 
   const loadProfileAndRoles = async (userId: string) => {
     const [{ data: p }, { data: r }] = await Promise.all([
@@ -54,18 +65,15 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   };
 
   useEffect(() => {
-    // 1. Listener primero (no async dentro del callback)
     const { data: { subscription } } = supabase.auth.onAuthStateChange((_event, s) => {
       setSession(s);
       if (s?.user) {
-        // defer para evitar deadlock con Supabase
         setTimeout(() => loadProfileAndRoles(s.user.id), 0);
       } else {
         setProfile(null);
         setRoles([]);
       }
     });
-    // 2. Hidratar sesión existente
     supabase.auth.getSession().then(async ({ data }) => {
       setSession(data.session);
       if (data.session?.user) await loadProfileAndRoles(data.session.user.id);
@@ -73,6 +81,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     });
     return () => subscription.unsubscribe();
   }, []);
+
 
   const signIn = async (email: string, password: string) => {
     const { error } = await supabase.auth.signInWithPassword({ email, password });
