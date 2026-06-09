@@ -73,7 +73,12 @@ function AyudaPage() {
             </ul>
           </div>
 
-          <form onSubmit={(e) => { e.preventDefault(); alert("Ticket enviado (mock). Recibirá respuesta en su correo."); }}
+          <form onSubmit={(e) => {
+            e.preventDefault();
+            const folio = `TCK-${new Date().getFullYear()}-${String(Math.floor(Math.random() * 9000) + 1000)}`;
+            toast.success(`Ticket ${folio} creado`, { description: "Recibirá respuesta por correo en menos de 24 h." });
+            (e.target as HTMLFormElement).reset();
+          }}
             className="bg-card border border-border rounded-lg p-5">
             <h3 className="font-semibold">Abrir un ticket</h3>
             <p className="text-xs text-muted-foreground mt-1">Describa el problema y se asignará a un agente.</p>
@@ -95,6 +100,7 @@ function AyudaPage() {
               <button className="w-full h-10 rounded-md bg-primary text-primary-foreground text-sm font-medium">Enviar ticket</button>
             </div>
           </form>
+
         </div>
       </div>
     </AppShell>
