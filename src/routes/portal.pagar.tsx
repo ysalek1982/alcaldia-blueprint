@@ -3,7 +3,10 @@ import { useState } from "react";
 import { ModuleShell } from "@/components/ModuleShell";
 import { Field, TextInput } from "@/components/FormSheet";
 import { navPortal } from "@/lib/module-navs";
-import { QrCode } from "lucide-react";
+import { usePagosStore } from "@/lib/stores";
+import { QrCode, CheckCircle2 } from "lucide-react";
+import { toast } from "sonner";
+
 
 export const Route = createFileRoute("/portal/pagar")({
   head: () => ({ meta: [{ title: "Pagar en línea" }] }),
