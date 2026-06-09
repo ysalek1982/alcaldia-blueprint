@@ -2,6 +2,8 @@ import { createFileRoute } from "@tanstack/react-router";
 import { ModuleShell } from "@/components/ModuleShell";
 import { navConfiguracion } from "@/lib/module-navs";
 import { Database, CreditCard, FileSignature, Mail } from "lucide-react";
+import { toast } from "sonner";
+
 
 export const Route = createFileRoute("/configuracion/conexiones")({
   head: () => ({ meta: [{ title: "Conexiones" }] }),
