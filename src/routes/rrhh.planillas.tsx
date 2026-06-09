@@ -7,6 +7,9 @@ import { FormSheet, Field, TextInput, Select } from "@/components/FormSheet";
 import { navRRHH } from "@/lib/module-navs";
 import { usePlanillasStore, useFuncionariosStore, type Planilla } from "@/lib/stores";
 import { CheckCircle2, FileSignature } from "lucide-react";
+import { downloadCSV } from "@/lib/csv";
+import { toast } from "sonner";
+
 
 export const Route = createFileRoute("/rrhh/planillas")({
   head: () => ({ meta: [{ title: "Planillas — RRHH" }] }),
@@ -22,10 +25,18 @@ function PlanillasPage() {
   const [detalle, setDetalle] = useState<Planilla | null>(null);
 
   const generar = (periodo: string) => {
-    const total = funcionarios.filter((f) => f.estado === "Activo").reduce((s, f) => s + f.salario, 0);
-    create({ periodo, total, funcionarios: funcionarios.filter((f) => f.estado === "Activo").length, estado: "Borrador", generada: new Date().toISOString().slice(0, 10) });
+    const activos = funcionarios.filter((f) => f.estado === "Activo");
+    const total = activos.reduce((s, f) => s + f.salario, 0);
+    create({ periodo, total, funcionarios: activos.length, estado: "Borrador", generada: new Date().toISOString().slice(0, 10) });
     setOpen(false);
+    toast.success(`Planilla ${periodo} generada`, { description: `${activos.length} funcionarios · Bs. ${total.toLocaleString("es-BO")}` });
   };
+
+  const exportar = () => {
+    downloadCSV(`planillas_${new Date().toISOString().slice(0, 10)}`, planillas);
+    toast.success(`Exportadas ${planillas.length} planillas a CSV`);
+  };
+
 
   return (
     <ModuleShell
@@ -34,7 +45,7 @@ function PlanillasPage() {
       subnav={navRRHH}
       breadcrumb={[{ label: "RRHH", to: "/rrhh" }, { label: "Planillas" }]}
     >
-      <EntityToolbar onCreate={() => setOpen(true)} createLabel="Generar planilla" onExport={() => alert("Exportar planilla CSV (mock)")} />
+      <EntityToolbar onCreate={() => setOpen(true)} createLabel="Generar planilla" onExport={exportar} />
       <DataTable
         columns={[
           { key: "periodo", label: "Período" },
@@ -48,12 +59,12 @@ function PlanillasPage() {
             <div className="flex justify-end gap-1">
               <button onClick={() => setDetalle(r)} className="text-xs text-primary hover:underline">Ver detalle</button>
               {r.estado === "Borrador" && (
-                <button onClick={() => update(r.id, { estado: "Aprobada" })} className="ml-2 inline-flex items-center gap-1 text-xs text-secondary hover:underline">
+                <button onClick={() => { update(r.id, { estado: "Aprobada" }); toast.success(`Planilla ${r.periodo} aprobada`); }} className="ml-2 inline-flex items-center gap-1 text-xs text-secondary hover:underline">
                   <CheckCircle2 className="h-3 w-3" /> Aprobar
                 </button>
               )}
               {r.estado === "Aprobada" && (
-                <button onClick={() => update(r.id, { estado: "Pagada" })} className="ml-2 inline-flex items-center gap-1 text-xs text-primary hover:underline">
+                <button onClick={() => { update(r.id, { estado: "Pagada" }); toast.success(`Planilla ${r.periodo} marcada como pagada`); }} className="ml-2 inline-flex items-center gap-1 text-xs text-primary hover:underline">
                   Marcar pagada
                 </button>
               )}

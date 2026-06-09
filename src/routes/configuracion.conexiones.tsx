@@ -2,6 +2,8 @@ import { createFileRoute } from "@tanstack/react-router";
 import { ModuleShell } from "@/components/ModuleShell";
 import { navConfiguracion } from "@/lib/module-navs";
 import { Database, CreditCard, FileSignature, Mail } from "lucide-react";
+import { toast } from "sonner";
+
 
 export const Route = createFileRoute("/configuracion/conexiones")({
   head: () => ({ meta: [{ title: "Conexiones" }] }),
@@ -25,7 +27,7 @@ export const Route = createFileRoute("/configuracion/conexiones")({
               </div>
               <div className="mt-4 font-semibold">{c.t}</div>
               <p className="text-sm text-muted-foreground mt-1">{c.d}</p>
-              <button className="mt-4 h-9 px-4 rounded-md bg-primary text-primary-foreground text-sm font-medium">Configurar</button>
+              <button onClick={() => toast.info(`Configurar ${c.t}`, { description: "Diálogo de credenciales · disponible al activar backend." })} className="mt-4 h-9 px-4 rounded-md bg-primary text-primary-foreground text-sm font-medium">Configurar</button>
             </div>
           );
         })}

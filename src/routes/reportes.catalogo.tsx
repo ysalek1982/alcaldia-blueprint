@@ -2,6 +2,9 @@ import { createFileRoute } from "@tanstack/react-router";
 import { ModuleShell } from "@/components/ModuleShell";
 import { navReportes } from "@/lib/module-navs";
 import { Download, FileBarChart } from "lucide-react";
+import { downloadCSV } from "@/lib/csv";
+import { toast } from "sonner";
+
 
 const REPORTES = [
   { c: "R-001", n: "Recaudación por concepto y mes", a: "Recaudaciones" },
@@ -30,9 +33,19 @@ export const Route = createFileRoute("/reportes/catalogo")({
                 <div className="font-semibold text-sm leading-tight mt-0.5">{r.n}</div>
               </div>
             </div>
-            <button onClick={() => alert(`Generando ${r.c} (mock)`)} className="mt-4 w-full h-9 rounded-md border border-border bg-card text-sm inline-flex items-center justify-center gap-2 hover:bg-muted">
+            <button onClick={() => {
+              const sample = Array.from({ length: 20 }).map((_, i) => ({
+                periodo: `2026-${String(((i % 9) + 1)).padStart(2, "0")}`,
+                concepto: r.n,
+                monto: Math.round(1000 + Math.random() * 15000),
+                area: r.a,
+              }));
+              downloadCSV(`${r.c}_${r.n.toLowerCase().replace(/\s+/g, "_")}`, sample);
+              toast.success(`Reporte ${r.c} generado`, { description: `${sample.length} filas exportadas a CSV` });
+            }} className="mt-4 w-full h-9 rounded-md border border-border bg-card text-sm inline-flex items-center justify-center gap-2 hover:bg-muted">
               <Download className="h-3.5 w-3.5" /> Generar
             </button>
+
           </div>
         ))}
       </div>
