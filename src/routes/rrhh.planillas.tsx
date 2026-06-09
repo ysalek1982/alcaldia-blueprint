@@ -45,7 +45,7 @@ function PlanillasPage() {
       subnav={navRRHH}
       breadcrumb={[{ label: "RRHH", to: "/rrhh" }, { label: "Planillas" }]}
     >
-      <EntityToolbar onCreate={() => setOpen(true)} createLabel="Generar planilla" onExport={() => alert("Exportar planilla CSV (mock)")} />
+      <EntityToolbar onCreate={() => setOpen(true)} createLabel="Generar planilla" onExport={exportar} />
       <DataTable
         columns={[
           { key: "periodo", label: "Período" },
@@ -59,12 +59,12 @@ function PlanillasPage() {
             <div className="flex justify-end gap-1">
               <button onClick={() => setDetalle(r)} className="text-xs text-primary hover:underline">Ver detalle</button>
               {r.estado === "Borrador" && (
-                <button onClick={() => update(r.id, { estado: "Aprobada" })} className="ml-2 inline-flex items-center gap-1 text-xs text-secondary hover:underline">
+                <button onClick={() => { update(r.id, { estado: "Aprobada" }); toast.success(`Planilla ${r.periodo} aprobada`); }} className="ml-2 inline-flex items-center gap-1 text-xs text-secondary hover:underline">
                   <CheckCircle2 className="h-3 w-3" /> Aprobar
                 </button>
               )}
               {r.estado === "Aprobada" && (
-                <button onClick={() => update(r.id, { estado: "Pagada" })} className="ml-2 inline-flex items-center gap-1 text-xs text-primary hover:underline">
+                <button onClick={() => { update(r.id, { estado: "Pagada" }); toast.success(`Planilla ${r.periodo} marcada como pagada`); }} className="ml-2 inline-flex items-center gap-1 text-xs text-primary hover:underline">
                   Marcar pagada
                 </button>
               )}
