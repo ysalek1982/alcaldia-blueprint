@@ -72,9 +72,10 @@ function MoraPage() {
           { key: "estado", label: "Estado", render: (r) => <Badge tone="destructive">{r.estado}</Badge> },
           { key: "__a", label: "Acciones", render: (r) => (
             <div className="flex gap-1">
-              <button onClick={() => notificar(r.nombre, r.deuda)} className="inline-flex items-center gap-1 text-xs px-2 py-1 rounded-md bg-accent/30 hover:bg-accent/50"><Bell className="h-3 w-3" /> Notificar</button>
-              <button onClick={() => alert("Generar plan de pago (mock)")} className="inline-flex items-center gap-1 text-xs px-2 py-1 rounded-md bg-muted hover:bg-muted/70"><FileText className="h-3 w-3" /> Plan</button>
-              <button onClick={() => alert("Llamada registrada (mock)")} className="inline-flex items-center gap-1 text-xs px-2 py-1 rounded-md bg-muted hover:bg-muted/70"><Phone className="h-3 w-3" /> Llamar</button>
+              <button onClick={() => notificar(r.id, r.nombre, r.deuda)} className="inline-flex items-center gap-1 text-xs px-2 py-1 rounded-md bg-accent/30 hover:bg-accent/50"><Bell className="h-3 w-3" /> Notificar</button>
+              <button onClick={() => planPago(r.id, r.nombre)} className="inline-flex items-center gap-1 text-xs px-2 py-1 rounded-md bg-muted hover:bg-muted/70"><FileText className="h-3 w-3" /> Plan</button>
+              <button onClick={() => llamar(r.nombre)} className="inline-flex items-center gap-1 text-xs px-2 py-1 rounded-md bg-muted hover:bg-muted/70"><Phone className="h-3 w-3" /> Llamar</button>
+
             </div>
           )},
         ]}
