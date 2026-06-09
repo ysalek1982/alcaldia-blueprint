@@ -25,10 +25,18 @@ function PlanillasPage() {
   const [detalle, setDetalle] = useState<Planilla | null>(null);
 
   const generar = (periodo: string) => {
-    const total = funcionarios.filter((f) => f.estado === "Activo").reduce((s, f) => s + f.salario, 0);
-    create({ periodo, total, funcionarios: funcionarios.filter((f) => f.estado === "Activo").length, estado: "Borrador", generada: new Date().toISOString().slice(0, 10) });
+    const activos = funcionarios.filter((f) => f.estado === "Activo");
+    const total = activos.reduce((s, f) => s + f.salario, 0);
+    create({ periodo, total, funcionarios: activos.length, estado: "Borrador", generada: new Date().toISOString().slice(0, 10) });
     setOpen(false);
+    toast.success(`Planilla ${periodo} generada`, { description: `${activos.length} funcionarios · Bs. ${total.toLocaleString("es-BO")}` });
   };
+
+  const exportar = () => {
+    downloadCSV(`planillas_${new Date().toISOString().slice(0, 10)}`, planillas);
+    toast.success(`Exportadas ${planillas.length} planillas a CSV`);
+  };
+
 
   return (
     <ModuleShell
