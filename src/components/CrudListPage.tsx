@@ -5,6 +5,9 @@ import { DataTable, type Column } from "./DataTable";
 import { EntityToolbar, SelectFilter } from "./EntityToolbar";
 import { FormSheet } from "./FormSheet";
 import { Trash2, Pencil } from "lucide-react";
+import { downloadCSV } from "@/lib/csv";
+import { toast } from "sonner";
+
 
 type Store<T extends { id: string }> = UseBoundStore<StoreApi<EntityStore<T>>>;
 
@@ -86,8 +89,23 @@ export function CrudListPage<T extends { id: string }>({
         filters={filters?.(filterState, (k, v) => setFilterState((s) => ({ ...s, [k]: v })))}
         onCreate={() => { setEditing(null); setSheetOpen(true); }}
         createLabel={createLabel}
-        onExport={exportable ? () => alert("Exportación CSV (mock). En Lovable Cloud se sirve desde Postgres.") : undefined}
+        onExport={
+          exportable
+            ? () => {
+                const exportCols = columns
+                  .filter((c) => !String(c.key).startsWith("__"))
+                  .map((c) => ({ key: String(c.key), label: c.label }));
+                downloadCSV(
+                  `export_${new Date().toISOString().slice(0, 10)}`,
+                  data.rows as unknown as Record<string, unknown>[],
+                  exportCols,
+                );
+                toast.success(`Exportados ${data.rows.length} registros a CSV`);
+              }
+            : undefined
+        }
       />
+
 
       {data.rows.length === 0 ? (
         <div className="bg-card border border-border rounded-lg p-12 text-center text-sm text-muted-foreground">
