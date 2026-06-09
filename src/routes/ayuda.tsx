@@ -2,6 +2,8 @@ import { createFileRoute } from "@tanstack/react-router";
 import { useState } from "react";
 import { AppShell } from "@/components/AppShell";
 import { BookOpen, MessageCircle, Mail, Phone, ChevronDown, FileText, Video, LifeBuoy } from "lucide-react";
+import { toast } from "sonner";
+
 
 export const Route = createFileRoute("/ayuda")({
   head: () => ({ meta: [{ title: "Ayuda y soporte — G.A.M. Buena Vista" }] }),
